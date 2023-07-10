@@ -64,3 +64,8 @@ margin: 20px auto;
     top: 0px;
     left: 30px;
 }
+@media only screen and (max-width: 1200px){
+    .rightbar .container .item{
+width: 300px;
+    }
+}

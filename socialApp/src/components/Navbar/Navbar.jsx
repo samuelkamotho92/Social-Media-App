@@ -13,9 +13,6 @@ const Navbar = () => {
           <span style={{ color: "#DEC9EE" }}>Let's talk</span>
         </Link>
         <div className='icon'>
-          <MdPhoneAndroid />
-        </div>
-        <div className='icon'>
           <DarkMode />
         </div>
       </div>
