@@ -1,7 +1,5 @@
 import config from "../confiq/confiq.js";
-import mssql from "mssql";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import sql from "mssql";
 export const getAllUsers = async (req, res) => {
   try {
     let pool = await sql.connect(config);

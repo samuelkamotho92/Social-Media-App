@@ -1,6 +1,6 @@
 var config = {
   server: "DESKTOP-KE6NN2R",
-  database: "Maduka",
+  database: "socialmediaDB",
   // host:"localhost",
   user: "sa",
   password: "12345678",
