@@ -5,7 +5,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { registerUser } from '../../redux/apicall';
+import { Navigate } from 'react-router-dom';
 const Register = () => {
+
     //resolver
     //schema
     const registerSchema = yup.object().shape({
@@ -19,8 +21,7 @@ const Register = () => {
     const onSubmit = (data) => {
         registerUser(data)
         reset();
-        // console.log(data);
-
+        <Navigate to='/login' />
     }
     return (
         <div className='register'>
