@@ -9,7 +9,7 @@ import { BsFillBookmarkFill } from 'react-icons/bs';
 import './Post.css';
 import Comments from '../Comments/Comments';
 const Post = ({ post }) => {
-    console.log(post.description);
+    console.log(post);
     //on click show us
     const [commentOpen, setCommentOpen] = useState(false);
 
