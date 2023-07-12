@@ -9,7 +9,7 @@ import { BsFillBookmarkFill } from 'react-icons/bs';
 import './Post.css';
 import Comments from '../Comments/Comments';
 const Post = ({ post }) => {
-
+    console.log(post.description);
     //on click show us
     const [commentOpen, setCommentOpen] = useState(false);
 
@@ -21,19 +21,19 @@ const Post = ({ post }) => {
             <div className="container">
                 <div className="user">
                     <div className="userInfo">
-                        <img src={post.img} alt="post" />
+                        <img src={post.profilePic} alt={post.profilePic} />
                         <div className="details">
-                            <Link to={`/profile/${post.userId}`} style={{ textDecoration: "none" }}>
-                                <span className='name'>{post.name}</span>
+                            <Link to={`/profile/${post.userId[0]}`} style={{ textDecoration: "none" }}>
+                                <span className='name'>{post.username}</span>
                             </Link>
-                            <span className='date'>{post.date}</span>
+                            <span className='date'>{post.createdAt}</span>
                         </div>
                     </div>
                     <MoreHorizIcon />
                 </div>
                 <div className="content">
-                    <p>{post.desc}</p>
-                    <img src={post.img} alt="" />
+                    <p>{post.description}</p>
+                    <img src={post.image} alt="" />
                 </div>
                 <div className="info">
                     <div className="item" color='red'>

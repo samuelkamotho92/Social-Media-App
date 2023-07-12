@@ -5,9 +5,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { registerUser } from '../../redux/apicall';
-import { Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 const Register = () => {
-
+    const user = useSelector((state) => state.user.user.status);
+    console.log(user)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     //resolver
     //schema
     const registerSchema = yup.object().shape({
@@ -19,9 +23,14 @@ const Register = () => {
     });
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm({ resolver: yupResolver(registerSchema) });
     const onSubmit = (data) => {
-        registerUser(data)
+        registerUser(dispatch, data)
         reset();
-        <Navigate to='/login' />
+        if (user == 'success') {
+            navigate('/login')
+        } else {
+            navigate('/register')
+        }
+        console.log(user);
     }
     return (
         <div className='register'>

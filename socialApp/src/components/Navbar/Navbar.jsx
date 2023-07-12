@@ -4,8 +4,11 @@ import { BsFillMoonFill } from 'react-icons/bs'
 import { BiUserCircle } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import DarkMode from '../Darkmode';
+import { useSelector, useDispatch } from 'react-redux';
+
 import './Navbar.css';
 const Navbar = () => {
+  const user = useSelector((state) => state.user.user?.data.username);
   return (
     <div className='navbar'>
       <div className='left'>
@@ -34,7 +37,7 @@ const Navbar = () => {
         </div>
         <div className='user'>
           <img src='../../../src/assets/profile.jpg' alt='profile' />
-          <span>Samkam</span>
+          <span>{user}</span>
         </div>
       </div>
     </div>

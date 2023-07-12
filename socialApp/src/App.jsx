@@ -10,6 +10,14 @@ import Userprofile from './Pages/Userprofile/Userprofile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query'
+
+import {
   createBrowserRouter,
   RouterProvider,
   Route,
@@ -17,10 +25,12 @@ import {
   Outlet,
   Navigate
 } from "react-router-dom";
+const queryClient = new QueryClient();
 function App() {
   const user = true;
   const Layout = () => {
     return (
+      // <QueryClientProvider client={queryClient}>
       <div className='theme-dark'>
         <Navbar />
         <div className='bars'>
@@ -31,6 +41,7 @@ function App() {
           <Rightbar />
         </div>
       </div>
+      // </QueryClientProvider>
     )
   }
 

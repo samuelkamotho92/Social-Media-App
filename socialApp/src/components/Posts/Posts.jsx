@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import profile from '../../assets/profile.jpg';
 import postone from '../../assets/sroryone.jpg';
 import twinnie from '../../assets/twinnie.jpg';
 import Post from '../Post/Post';
 import './Posts.css';
+import { useQuery } from 'react-query';
+import { getPosts } from '../../redux/apicall';
+import { useDispatch, useSelector } from 'react-redux';
 const Posts = () => {
-
+    const dispatch = useDispatch();
+    const postdata = useSelector((state) => state.post?.posts);
+    console.log(postdata);
+    useEffect(() => {
+        getPosts(dispatch);
+    }, [])
     const posts = [
         {
             id: 1,
@@ -25,13 +33,12 @@ const Posts = () => {
             img: twinnie,
             date: '2 days ago'
         }
-
     ]
 
     return (
         <div className='posts'>
             {
-                posts.map((post) => (
+                postdata.map((post) => (
                     <Post post={post} key={post.id} />
                 ))
             }
