@@ -2,6 +2,7 @@ import config from "../confiq/confiq.js";
 import sql from "mssql";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 export const register = async (req, res) => {
   console.log(req.body);
   const { username, email, password, fullnames } = req.body;
@@ -51,13 +52,19 @@ export const loginUser = async (req, res) => {
       });
     } else {
       //create a jwt token store it
-      const token = `${jwt.sign({ email: user.email }, process.env.SECRET, {
-        expiresIn: process.env.EXPIRY,
-      })}`;
-      res.cookie("lets talk", token, {
-        httpOnly: true,
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-      });
+      const token = `${jwt.sign(
+        { email: user.email, id: user.id },
+        process.env.SECRET,
+        {
+          expiresIn: process.env.EXPIRY,
+        }
+      )}`;
+      // res.cookie("token", token, {
+      //   maxAge: 30 * 24 * 60 * 60 * 1000,
+      // });
+      res.cookie(`Cookie token name`, `encrypted cookie string Value`);
+
+      // console.log(res.cookies, "get user");
       res.status(200).json({
         status: "success",
         data: user,
@@ -69,7 +76,7 @@ export const loginUser = async (req, res) => {
 
 export const logOut = async (req, res) => {
   res
-    .clearCookie("lets talk", {
+    .clearCookie("token", {
       secure: true,
       sameSite: "none",
     })

@@ -53,10 +53,10 @@ export const logOut = async (dispatch) => {
   dispatch(logout());
 };
 
-export const getPosts = async (dispatch) => {
+export const getPosts = async (dispatch, token) => {
   dispatch(postStart());
   try {
-    const { data } = await axios.get(`${domain}/posts`);
+    const { data } = await axios.post(`${domain}/posts/getposts`, token);
     console.log(data);
     dispatch(postSuccess(data));
   } catch (err) {
