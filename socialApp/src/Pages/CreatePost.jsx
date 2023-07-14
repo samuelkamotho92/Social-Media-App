@@ -9,7 +9,8 @@ import {
 import '../firebase'
 import { useSelector, useDispatch } from 'react-redux';
 import './createPost.css'
-import { BsImage } from 'react-icons/bs';
+import { BsImage, BsPeopleFill } from 'react-icons/bs';
+import { MdPlace } from 'react-icons/md';
 const CreatePost = () => {
     const [postfile, setpostFile] = useState(null);
     const [statement, setStatement] = useState('');
@@ -50,9 +51,11 @@ const CreatePost = () => {
                             </div>
                         </label>
                         <div className="item">
+                            <MdPlace />
                             <span>Add Place</span>
                         </div>
                         <div className="item">
+                            <BsPeopleFill />
                             <span>Tag Friends</span>
                         </div>
                     </div>
@@ -61,8 +64,6 @@ const CreatePost = () => {
                     </div>
                 </div>
             </form>
-
-
         </div>
     )
 }

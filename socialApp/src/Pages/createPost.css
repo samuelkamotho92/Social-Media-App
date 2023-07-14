@@ -17,7 +17,7 @@
 
 .top .left input{
     outline: none;
-    padding: 20px 10px;
+    padding: auto 10px;
     background-color: tran🇸parent;
     width: 60%;
     border-radius: 20px;
@@ -46,4 +46,9 @@
 }
 .bottom .left .item{
     display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.bottom .right{
+    height: 20px;
 }
