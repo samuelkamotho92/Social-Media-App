@@ -12,6 +12,13 @@ import {
   registerStart,
 } from "./userSlice";
 
+import {
+  storyStart,
+  storySuccess,
+  storyFailure,
+  createStorySuccess,
+} from "./storiesSlice";
+
 import { postStart, postSuccess, postFailure } from "./postSlice";
 
 export const registerUser = async (dispatch, user) => {
@@ -61,5 +68,37 @@ export const getPosts = async (dispatch, token) => {
     dispatch(postSuccess(data));
   } catch (err) {
     dispatch(postFailure());
+  }
+};
+
+export const createStory = async (dispatch, data) => {
+  console.log(data, "stories info");
+  dispatch(storyStart());
+  try {
+    const dataVal = await axios.post(`${domain}/stories/`, data);
+    console.log(dataVal.data.status);
+    if (dataVal.data.status == "success") {
+      toast.success(`Story uploaded`, {
+        position: "top-center",
+      });
+    } else {
+      toast.warning(`story not uploaded`, {
+        position: "top-center",
+      });
+    }
+    dispatch(createStorySuccess(data));
+  } catch (err) {
+    dispatch(storyFailure());
+  }
+};
+
+export const getStories = async (dispatch) => {
+  dispatch(storyStart());
+  try {
+    const { data } = await axios.get(`${domain}/stories/`);
+    console.log(data);
+    dispatch(storySuccess(data));
+  } catch (err) {
+    dispatch(storyFailure());
   }
 };

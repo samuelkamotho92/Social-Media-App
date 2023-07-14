@@ -19,7 +19,13 @@ const storySlice = createSlice({
       state.isFetching = false;
       state.error = action.payload;
     },
+    createStorySuccess: (state, action) => {
+      state.isFetching = false;
+      state.stories.push(action.payload);
+      state.error = false;
+    },
   },
 });
-export const { storyStart, storySuccess, storyFailure } = storySlice.actions;
+export const { storyStart, storySuccess, storyFailure, createStorySuccess } =
+  storySlice.actions;
 export default storySlice.reducer;

@@ -10,6 +10,7 @@ import './Post.css';
 import Comments from '../Comments/Comments';
 const Post = ({ post }) => {
     console.log(post);
+    // const image = post
     //on click show us
     const [commentOpen, setCommentOpen] = useState(false);
 

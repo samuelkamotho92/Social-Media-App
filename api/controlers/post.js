@@ -5,7 +5,7 @@ import moment from "moment";
 let token;
 export const createPost = async (req, res) => {
   // console.log(req.body);
-  console.log(token);
+  // console.log(token);
   try {
     let { description, image, userId, createdAt } = req.body;
     let pool = await sql.connect(config);

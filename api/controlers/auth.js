@@ -60,9 +60,9 @@ export const loginUser = async (req, res) => {
         }
       )}`;
       // res.cookie("token", token, {
+      //   httpOnly: true,
       //   maxAge: 30 * 24 * 60 * 60 * 1000,
       // });
-      res.cookie(`Cookie token name`, `encrypted cookie string Value`);
 
       // console.log(res.cookies, "get user");
       res.status(200).json({

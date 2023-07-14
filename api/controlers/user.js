@@ -33,3 +33,46 @@ export const getOneUser = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+
+export const updateUser = async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  console.log(req.body);
+  const {
+    username,
+    email,
+    password,
+    fullnames,
+    coverpic,
+    profilePic,
+    city,
+    website,
+  } = req.body;
+  let pool = await sql.connect(config);
+  let updatedUser = await pool
+    .request()
+    .input("id", sql.Int, id)
+    .input("username", sql.VarChar, username)
+    .input("email", sql.VarChar, email)
+    .input("password", sql.VarChar, password)
+    .input("fullnames", sql.VarChar, fullnames)
+    .input("coverpic", sql.VarChar, coverpic)
+    .input("profilePic", sql.VarChar, profilePic)
+    .input("city", sql.VarChar, city)
+    .input("website", sql.VarChar, website).query(`UPDATE users
+ SET username = COALESCE(@username, username),
+ email = COALESCE(@email, email),
+ password = COALESCE(@password, password),
+ fullnames = COALESCE(@fullnames, fullnames),
+ coverpic = COALESCE(@coverpic, coverpic),
+ profilePic = COALESCE(@profilePic, profilePic),
+ city = COALESCE(@city, city),
+ website = COALESCE(@website, website)
+ WHERE id = @id
+ `);
+  console.log(updatedUser);
+  res.status(200).json({
+    status: "success",
+    user: updatedUser,
+  });
+};

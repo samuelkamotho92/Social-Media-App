@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
+import storyRouter from "./routes/stories.js";
 import cors from "cors";
 import postRouter from "./routes/post.js";
 import relationshipRouter from "./routes/relationship.js";
@@ -21,6 +22,7 @@ app.get("/setcookie", (req, res) => {
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/posts", postRouter);
+app.use("/stories", storyRouter);
 app.use("/relationships", relationshipRouter);
 app.listen(process.env.PORT, () => {
   console.log(`server running on port ${process.env.PORT}`);
