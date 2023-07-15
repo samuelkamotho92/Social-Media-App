@@ -19,7 +19,13 @@ const postSlice = createSlice({
       state.isFetching = false;
       state.error = action.payload;
     },
+    createPostSuccess: (state, action) => {
+      state.isFetching = false;
+      state.posts.push(action.payload);
+      state.error = false;
+    },
   },
 });
-export const { postStart, postSuccess, postFailure } = postSlice.actions;
+export const { postStart, postSuccess, postFailure, createPostSuccess } =
+  postSlice.actions;
 export default postSlice.reducer;

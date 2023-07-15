@@ -6,8 +6,10 @@ let token;
 export const createPost = async (req, res) => {
   // console.log(req.body);
   // console.log(token);
+  const createdAt = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+  console.log(createdAt);
   try {
-    let { description, image, userId, createdAt } = req.body;
+    let { description, image, userId } = req.body;
     let pool = await sql.connect(config);
     let createdPost = await pool
       .request()
@@ -20,6 +22,7 @@ export const createPost = async (req, res) => {
       );
     console.log(createPost);
     res.status(200).json({
+      status: "success",
       data: createdPost,
     });
   } catch (err) {
@@ -108,7 +111,7 @@ export const updatePosts = async (req, res) => {
   console.log(updatedPosts);
   res.status(200).json({
     status: "success",
-    auction: updatedPosts,
+    comment: updatedPosts,
   });
 };
 

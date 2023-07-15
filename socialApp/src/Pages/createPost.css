@@ -42,6 +42,7 @@
 .bottom .left{
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 20px;
 }
 .bottom .left .item{
@@ -49,6 +50,14 @@
     align-items: center;
     gap: 10px;
 }
-.bottom .right{
-    height: 20px;
+.right button{
+    cursor: pointer;
+}
+
+/* .left form{
+
+} */
+.createpostform{
+display: flex;
+align-items: center;
 }

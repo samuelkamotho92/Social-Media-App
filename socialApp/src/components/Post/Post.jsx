@@ -8,9 +8,17 @@ import { BiRepost } from 'react-icons/bi';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import './Post.css';
 import Comments from '../Comments/Comments';
+import moment from 'moment'
+import { useSelector, useDispatch } from 'react-redux';
 const Post = ({ post }) => {
+    const dispatch = useDispatch();
+    const comments = useSelector((state) => state.comment?.comments);
     console.log(post);
-    // const image = post
+    const array = post.image;
+    const string = JSON.stringify(array).replace(/[[\]]/g, '').replace(/'/g, '').replace(/^"|"$/g, '');
+    console.log(string);
+    // const finalString = string.replace(/'/g, '');
+    // console.log(finalString);
     //on click show us
     const [commentOpen, setCommentOpen] = useState(false);
 
@@ -27,14 +35,14 @@ const Post = ({ post }) => {
                             <Link to={`/profile/${post.userId[0]}`} style={{ textDecoration: "none" }}>
                                 <span className='name'>{post.username}</span>
                             </Link>
-                            <span className='date'>{post.createdAt}</span>
+                            <span className='date'>{moment(post.createdAt).fromNow()}</span>
                         </div>
                     </div>
                     <MoreHorizIcon />
                 </div>
                 <div className="content">
                     <p>{post.description}</p>
-                    <img src={post.image} alt="" />
+                    <img src={string} alt="" />
                 </div>
                 <div className="info">
                     <div className="item" color='red'>
@@ -43,7 +51,7 @@ const Post = ({ post }) => {
                     </div>
                     <div className="item" color='red' onClick={() => setCommentOpen(!commentOpen)}>
                         <TextsmsOutlinedIcon />
-                        5 comments
+                        {comments?.length} comments
                     </div>
                     <div className="item" color='red'>
                         <BiRepost />
@@ -54,7 +62,7 @@ const Post = ({ post }) => {
                         Save Post
                     </div>
                 </div>
-                {commentOpen && <Comments />}
+                {commentOpen && <Comments postId={post.id} />}
             </div>
         </div >
     )

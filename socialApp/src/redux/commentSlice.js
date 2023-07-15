@@ -19,8 +19,17 @@ const commentSlice = createSlice({
       state.isFetching = false;
       state.error = action.payload;
     },
+    createCommentSuccess: (state, action) => {
+      state.isFetching = false;
+      state.comments.push(action.payload);
+      state.error = false;
+    },
   },
 });
-export const { commentStart, commentSuccess, commentFailure } =
-  commentSlice.actions;
+export const {
+  commentStart,
+  commentSuccess,
+  commentFailure,
+  createCommentSuccess,
+} = commentSlice.actions;
 export default commentSlice.reducer;

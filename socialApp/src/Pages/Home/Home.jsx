@@ -64,6 +64,7 @@ const Home = () => {
       }
     );
     // createStory(dispatch, { id, photos });
+    setFile(null);
   }
   return (
     <div className='home'>

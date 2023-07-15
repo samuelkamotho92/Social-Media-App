@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './Navbar.css';
 const Navbar = () => {
+  const profilepic = useSelector((state) => state.user.user.data?.profilePic);
   const user = useSelector((state) => state.user.user?.data.username);
   return (
     <div className='navbar'>
@@ -36,7 +37,7 @@ const Navbar = () => {
           <MdNotifications />
         </div>
         <div className='user'>
-          <img src='../../../src/assets/profile.jpg' alt='profile' />
+          <img src={profilepic} alt='profile' />
           <span>{user}</span>
         </div>
       </div>

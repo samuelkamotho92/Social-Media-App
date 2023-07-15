@@ -19,7 +19,19 @@ import {
   createStorySuccess,
 } from "./storiesSlice";
 
-import { postStart, postSuccess, postFailure } from "./postSlice";
+import {
+  postStart,
+  postSuccess,
+  postFailure,
+  createPostSuccess,
+} from "./postSlice";
+
+import {
+  commentStart,
+  commentSuccess,
+  commentFailure,
+  createCommentSuccess,
+} from "./commentSlice";
 
 export const registerUser = async (dispatch, user) => {
   console.log(user);
@@ -71,6 +83,18 @@ export const getPosts = async (dispatch, token) => {
   }
 };
 
+export const getComments = async (dispatch, id) => {
+  dispatch(commentStart());
+  console.log(id);
+  try {
+    const { data } = await axios.get(`${domain}/comments/${id}`);
+    console.log(data);
+    dispatch(commentSuccess(data));
+  } catch (err) {
+    dispatch(commentFailure());
+  }
+};
+
 export const createStory = async (dispatch, data) => {
   console.log(data, "stories info");
   dispatch(storyStart());
@@ -89,6 +113,47 @@ export const createStory = async (dispatch, data) => {
     dispatch(createStorySuccess(data));
   } catch (err) {
     dispatch(storyFailure());
+  }
+};
+export const createComment = async (dispatch, data) => {
+  console.log(data, "comment info");
+  dispatch(commentStart());
+  try {
+    const dataVal = await axios.post(`${domain}/comments/`, data);
+    console.log(dataVal.data.status);
+    if (dataVal.data.status == "success") {
+      toast.success(`Comment uploaded`, {
+        position: "top-center",
+      });
+    } else {
+      toast.warning(`comment not uploaded`, {
+        position: "top-center",
+      });
+    }
+    dispatch(createCommentSuccess(data));
+  } catch (err) {
+    dispatch(commentFailure());
+  }
+};
+
+export const createPost = async (dispatch, data) => {
+  console.log(data, "post info");
+  dispatch(postStart());
+  try {
+    const dataVal = await axios.post(`${domain}/posts/createpost/`, data);
+    console.log(dataVal.data.status);
+    if (dataVal.data.status == "success") {
+      toast.success(`Post uploaded`, {
+        position: "top-center",
+      });
+    } else {
+      toast.warning(`Post not uploaded`, {
+        position: "top-center",
+      });
+    }
+    dispatch(createPostSuccess(data));
+  } catch (err) {
+    dispatch(postFailure());
   }
 };
 
