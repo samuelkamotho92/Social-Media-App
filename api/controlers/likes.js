@@ -30,7 +30,7 @@ export const getLikes = async (req, res) => {
       .request()
       .query(`SELECT likesuserId FROM likes WHERE likespostId=${postId}`);
     console.log(likes);
-    res.status(200).json(likes.recordset);
+    res.status(200).json(likes.recordset.map((like) => like.likesuserId));
   } catch (err) {
     res.status(404).json(err);
   }

@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom'
 import './Sidebar.css';
 const Sidebar = () => {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user?.data.username);
-  const userStatus = useSelector((state) => state.user.user.status);
+  const user = useSelector((state) => state.user?.user?.data.username);
+  // const userStatus = useSelector((state) => state.user?.user?.status);
   const dispatch = useDispatch();
   const logoutUser = () => {
     logOut(dispatch);

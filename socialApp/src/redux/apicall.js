@@ -186,7 +186,6 @@ export const getStories = async (dispatch) => {
 };
 
 export const getlikePost = async (dispatch, id) => {
-  console.log(id);
   dispatch(likesStart());
   try {
     const { data } = await axios.get(`${domain}/likes/${id}`);

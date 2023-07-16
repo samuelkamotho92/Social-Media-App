@@ -8,9 +8,9 @@ const Comments = ({ postId }) => {
     const [description, setdescription] = useState('');
     const dispatch = useDispatch();
     const comments = useSelector((state) => state.comment?.comments);
-    const profilePic = useSelector((state) => state.user.user.data?.profilePic);
-    const username = useSelector((state) => state.user.user.data?.username);
-    const commentuserId = useSelector((state) => state.user.user.data?.id);
+    const profilePic = useSelector((state) => state.user?.user?.data?.profilePic);
+    const username = useSelector((state) => state.user?.user?.data?.username);
+    const commentuserId = useSelector((state) => state?.user?.user?.data?.id);
     console.log(commentuserId);
     useEffect(() => {
         getComments(dispatch, postId)
@@ -32,7 +32,7 @@ const Comments = ({ postId }) => {
                 </form>
             </div>
             {
-                comments.map((comment) => (
+                comments?.map((comment) => (
                     <div className='comment' key={comment.id}>
                         <img src={comment.profilePic} alt='profile pic' />
                         <div className='info'>

@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './Navbar.css';
 const Navbar = () => {
-  const profilepic = useSelector((state) => state.user.user.data?.profilePic);
+  const profilepic = useSelector((state) => state.user?.user?.data?.profilePic);
   const user = useSelector((state) => state.user.user?.data.username);
   const id = useSelector((state) => state.user.user?.data.id);
   return (

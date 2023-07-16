@@ -15,11 +15,10 @@ const Post = ({ post }) => {
     const dispatch = useDispatch();
     const comments = useSelector((state) => state?.comment?.comments);
     const likedpost = useSelector((state) => state?.likes?.likes)
+    console.log(likedpost);
     const array = post?.image;
     const string = JSON.stringify(array).replace(/[[\]]/g, '').replace(/'/g, '').replace(/^"|"$/g, '');
     const [commentOpen, setCommentOpen] = useState(false);
-
-
     const liked = true;
     useEffect(() => {
         getlikePost(dispatch, post.id);
