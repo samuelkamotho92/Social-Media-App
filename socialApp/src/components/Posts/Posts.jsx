@@ -9,16 +9,16 @@ import { getPosts } from '../../redux/apicall';
 import { useDispatch, useSelector } from 'react-redux';
 const Posts = () => {
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.user.user);
-    const postdata = useSelector((state) => state.post?.posts);
+    const token = useSelector((state) => state?.user?.user);
+    const postdata = useSelector((state) => state?.post?.posts);
     useEffect(() => {
         getPosts(dispatch, token);
     }, [])
     return (
         <div className='posts'>
             {
-                postdata.map((post) => (
-                    <Post post={post} key={post.id} />
+                postdata?.map((post) => (
+                    <Post post={post} key={post?.id} />
                 ))
             }
 

@@ -9,7 +9,7 @@ import { getStories } from '../../redux/apicall';
 import { useSelector, useDispatch } from 'react-redux';
 const Stories = () => {
     const dispatch = useDispatch();
-    const stories = useSelector((state) => state.story.stories);
+    const stories = useSelector((state) => state?.story?.stories);
     console.log(stories)
     useEffect(() => {
         getStories(dispatch);
@@ -24,7 +24,7 @@ const Stories = () => {
                 <button style={{ color: "red" }}>+</button>
             </div>
             {
-                stories.map((story) => (
+                stories?.map((story) => (
                     <div className="story" key={story.id}>
                         <img src={story.image} alt={story.name} />
                         <span>{story.name}</span>

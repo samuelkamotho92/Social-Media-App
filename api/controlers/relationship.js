@@ -20,3 +20,23 @@ export const createRelationship = async (req, res) => {
     res.status(404).json(err);
   }
 };
+
+export const getrelationships = async (req, res) => {
+  try {
+    const followeduserId = req.params.id;
+    let pool = await sql.connect(config);
+    let followers = await pool
+      .request()
+      .query(
+        `SELECT followeruserId FROM relationships WHERE followeduserId=${followeduserId}`
+      );
+    console.log(followers);
+    res
+      .status(200)
+      .json(
+        followers.recordset.map((relationship) => relationship.followeruserId)
+      );
+  } catch (err) {
+    res.status(404).json(err);
+  }
+};

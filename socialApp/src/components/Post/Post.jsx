@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
@@ -10,20 +10,20 @@ import './Post.css';
 import Comments from '../Comments/Comments';
 import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux';
+import { getlikePost } from '../../redux/apicall';
 const Post = ({ post }) => {
     const dispatch = useDispatch();
-    const comments = useSelector((state) => state.comment?.comments);
-    console.log(post);
-    const array = post.image;
+    const comments = useSelector((state) => state?.comment?.comments);
+    const likedpost = useSelector((state) => state?.likes?.likes)
+    const array = post?.image;
     const string = JSON.stringify(array).replace(/[[\]]/g, '').replace(/'/g, '').replace(/^"|"$/g, '');
-    console.log(string);
-    // const finalString = string.replace(/'/g, '');
-    // console.log(finalString);
-    //on click show us
     const [commentOpen, setCommentOpen] = useState(false);
 
 
-    const liked = false;
+    const liked = true;
+    useEffect(() => {
+        getlikePost(dispatch, post.id);
+    }, []);
 
     return (
         <div className='post'>
@@ -46,8 +46,8 @@ const Post = ({ post }) => {
                 </div>
                 <div className="info">
                     <div className="item" color='red'>
-                        {liked ? <p style={{ color: "black" }}><FavoriteOutlinedIcon /></p> : <p style={{ color: "black" }}><FavoriteBorderOutlinedIcon /></p>}
-                        30likes
+                        {likedpost?.length ? <p style={{ color: "red" }}><FavoriteOutlinedIcon /></p> : <p style={{ color: "black" }}><FavoriteBorderOutlinedIcon /></p>}
+                        {likedpost?.length} likes
                     </div>
                     <div className="item" color='red' onClick={() => setCommentOpen(!commentOpen)}>
                         <TextsmsOutlinedIcon />
@@ -62,7 +62,7 @@ const Post = ({ post }) => {
                         Save Post
                     </div>
                 </div>
-                {commentOpen && <Comments postId={post.id} />}
+                {commentOpen && <Comments postId={post?.id} />}
             </div>
         </div >
     )

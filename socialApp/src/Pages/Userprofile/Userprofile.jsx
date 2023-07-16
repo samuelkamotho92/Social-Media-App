@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import profile from '../../assets/profile.jpg';
 import "./Userprofile.css";
 import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
@@ -10,12 +10,30 @@ import LanguageIcon from "@mui/icons-material/Language";
 import parklands from '../../assets/MLSA.jpeg';
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { getuser, getRelationship } from '../../redux/apicall';
 const Userprofile = () => {
+  const id = useLocation().pathname.split("/")[2];
+  const dispatch = useDispatch();
+  const currentuserid = useSelector((state) => state.user.user.data.id);
+  const userid = useSelector((state) => state.user?.currentUser?.user.id);
+  const user = useSelector((state) => state.user?.currentUser?.user);
+  const following = useSelector((state) => state?.relationship?.follow)[0]
+  console.log(following);
+  useEffect(() => {
+    getRelationship(dispatch, userid);
+    getuser(dispatch, id);
+  }, []);
+
+  const handleFollow = () => {
+    console.log('stated following')
+  }
   return (
     <div className='userprofile'>
       <div className="images">
-        <img src={parklands} alt="" className='cover' />
-        <img src={profile} alt="" className='profilePic' />
+        <img src={user?.coverpic} alt="" className='cover' />
+        <img src={user?.profilePic} alt="" className='profilePic' />
       </div>
       <div className="profileContainer">
         <div className="uInfo">
@@ -23,29 +41,31 @@ const Userprofile = () => {
             <a href="http://facebook.com">
               <FacebookTwoToneIcon fontSize="large" />
             </a>
-            <a href="http://facebook.com">
+            <a href="http://instagram.com">
               <InstagramIcon fontSize="large" />
             </a>
-            <a href="http://facebook.com">
+            <a href="http://twitter.com">
               <TwitterIcon fontSize="large" />
             </a>
-            <a href="http://facebook.com">
+            <a href="http://linkedin.com">
               <LinkedInIcon fontSize="large" />
             </a>
           </div>
           <div className="center">
-            <span className='name'>Samuel Kamotho</span>
+            <span className='name'>{user?.fullnames}</span>
             <div className="info">
               <div className="item">
                 <PlaceIcon />
-                <span>KENYA</span>
+                <span>{user?.city}</span>
               </div>
               <div className="item">
                 <LanguageIcon />
-                <span>SamkamDev</span>
+                <span>{user?.username}</span>
               </div>
             </div>
-            <button>follow</button>
+            {currentuserid === userid ? (<button>Update</button>) : <button onClick={handleFollow}>
+              {currentuserid == following ? "following" : "follow"}
+            </button>}
           </div>
           <div className="right">
             <div>

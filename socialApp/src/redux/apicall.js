@@ -10,6 +10,7 @@ import {
   registerFailure,
   registerSuccess,
   registerStart,
+  userSuccess,
 } from "./userSlice";
 
 import {
@@ -32,6 +33,22 @@ import {
   commentFailure,
   createCommentSuccess,
 } from "./commentSlice";
+
+import {
+  likesStart,
+  likesSuccess,
+  likesFailure,
+  createlikesSuccess,
+  removelikesSuccess,
+} from "./likesSlice";
+
+import {
+  followStart,
+  followFailure,
+  followSuccess,
+  createfollowSuccess,
+  removefollowSuccess,
+} from "./relationshipSlice";
 
 export const registerUser = async (dispatch, user) => {
   console.log(user);
@@ -165,5 +182,37 @@ export const getStories = async (dispatch) => {
     dispatch(storySuccess(data));
   } catch (err) {
     dispatch(storyFailure());
+  }
+};
+
+export const getlikePost = async (dispatch, id) => {
+  console.log(id);
+  dispatch(likesStart());
+  try {
+    const { data } = await axios.get(`${domain}/likes/${id}`);
+    console.log(data, `number of  post for ${id}`);
+    dispatch(likesSuccess(data));
+  } catch (err) {
+    dispatch(likesFailure());
+  }
+};
+
+export const getuser = async (dispatch, id) => {
+  try {
+    const { data } = await axios.get(`${domain}/user/${id}`);
+    dispatch(userSuccess(data));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getRelationship = async (dispatch, id) => {
+  dispatch(followStart());
+  try {
+    const { data } = await axios.get(`${domain}/relationships/${id}`);
+    console.log(data);
+    dispatch(followSuccess(data));
+  } catch (err) {
+    dispatch(followFailure());
   }
 };

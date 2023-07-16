@@ -31,3 +31,16 @@ CREATE TABLE relationships
     FOREIGN KEY (followeruserId) REFERENCES users(id),
     FOREIGN KEY (followeduserId) REFERENCES users(id)
 );
+
+
+--cREATE lIKES 
+CREATE TABLE likes
+(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    likesuserId INT,
+    postuserId INT,
+    
+    FOREIGN KEY (likesuserId) REFERENCES users(id),
+    FOREIGN KEY (postuserId) REFERENCES posts(id)
+);
+sp_rename 'likes.postuserId', 'likespostId', 'COLUMN';

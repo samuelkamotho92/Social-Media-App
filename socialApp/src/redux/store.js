@@ -3,6 +3,8 @@ import userSlice from "./userSlice";
 import postSlice from "./postSlice";
 import commentSlice from "./commentSlice";
 import storiesSlice from "./storiesSlice";
+import likesSlice from "./likesSlice";
+import relationshipSlice from "./relationshipSlice";
 import {
   persistStore,
   persistReducer,
@@ -25,6 +27,8 @@ const rootReducer = combineReducers({
   post: postSlice,
   comment: commentSlice,
   story: storiesSlice,
+  likes: likesSlice,
+  relationship: relationshipSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

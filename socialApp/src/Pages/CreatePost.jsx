@@ -15,9 +15,9 @@ import { createPost } from '../redux/apicall';
 const CreatePost = () => {
     const [postfile, setpostFile] = useState(null);
     const [description, setDescription] = useState('');
-    const state = useSelector((state) => state.user?.user);
-    const userId = state.data.id;
-    const profile = useSelector((state) => state.user?.user.data.profilePic);
+    const state = useSelector((state) => state?.user?.user);
+    const userId = state?.data?.id;
+    const profile = useSelector((state) => state.user?.user?.data?.profilePic);
     const dispatch = useDispatch();
     const handleSubmit = async (e) => {
         e.preventDefault();

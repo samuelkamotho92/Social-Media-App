@@ -20,8 +20,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import CreatePost from '../CreatePost';
 const Home = () => {
   const [file, setFile] = useState(null);
-  const state = useSelector((state) => state.user?.user);
-  const storyuserId = state.data.id;
+  const state = useSelector((state) => state?.user?.user);
+  const storyuserId = state?.data.id;
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     console.log(file);
