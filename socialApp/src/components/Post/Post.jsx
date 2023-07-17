@@ -21,16 +21,20 @@ const Post = ({ post }) => {
     const string = JSON.stringify(array).replace(/[[\]]/g, '').replace(/'/g, '').replace(/^"|"$/g, '');
     const [commentOpen, setCommentOpen] = useState(false);
     const [likedPost, setLikedPost] = useState();
+    let [likedPst, setLikedPst] = useState();
     const liked = true;
     useEffect(() => {
         const getLikes = async () => {
-            const dt = await getlikePost(dispatch, post.id);
-            setLikedPost(dt);
+            const { data, likes } = await getlikePost(dispatch, post.id);
+            console.log(data);
+            setLikedPost(data);
+            setLikedPst(data.length);
             // setLikedpost(dt)
         }
         getLikes();
     }, []);
-    // console.log(likedPost);
+    console.log(likedPst);
+    console.log(likedPost);
     // dispatch(likesSlice(likedPost));
     // console.log(likedpost);
     const handleLiked = () => {
@@ -38,11 +42,21 @@ const Post = ({ post }) => {
         //check if you ahve already liked the post 
         if (likedPost?.includes(user.id)) {
             //unlike post
-            deletelikepost(dispatch, { likesuserId: user.id, likespostId: post.id }, post.id);
+            if (likedPst >= 1) {
+                likedPst = setLikedPst(likedPst - 1);
+                deletelikepost(dispatch, { likesuserId: user.id, likespostId: post.id }, post.id);
+            } else {
+                likedPst = setLikedPst(likedPst + 1);
+                createlikepost(dispatch, { likesuserId: user.id, likespostId: post.id });
+            }
         } else {
-            //like post
-            //pass the post id and user id
-            createlikepost(dispatch, { likesuserId: user.id, likespostId: post.id });
+            if (likedPst <= 0) {
+                likedPst = setLikedPst(likedPst + 1);
+                createlikepost(dispatch, { likesuserId: user.id, likespostId: post.id });
+            } else {
+                likedPst = setLikedPst(likedPst - 1);
+                deletelikepost(dispatch, { likesuserId: user.id, likespostId: post.id }, post.id);
+            }
         }
     }
 
@@ -67,8 +81,8 @@ const Post = ({ post }) => {
                 </div>
                 <div className="info">
                     <div className="item" color='red'>
-                        {likedPost?.includes(user.id) ? <p style={{ color: "red" }}><FavoriteOutlinedIcon onClick={handleLiked} /></p> : <p style={{ color: "black" }}><FavoriteBorderOutlinedIcon onClick={handleLiked} /></p>}
-                        {likedPost?.length} likes
+                        {likedPost?.includes(user.id) && likedPst > 0 ? <p style={{ color: "red" }}><FavoriteOutlinedIcon onClick={handleLiked} /></p> : <p style={{ color: "black" }}><FavoriteBorderOutlinedIcon onClick={handleLiked} /></p>}
+                        {likedPst} likes
                     </div>
                     <div className="item" color='red' onClick={() => setCommentOpen(!commentOpen)}>
                         <TextsmsOutlinedIcon />

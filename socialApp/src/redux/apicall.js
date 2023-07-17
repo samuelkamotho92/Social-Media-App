@@ -186,10 +186,13 @@ export const getStories = async (dispatch) => {
 export const getlikePost = async (dispatch, id) => {
   dispatch(likesStart());
   try {
+    const likes = [];
     const { data } = await axios.get(`${domain}/likes/${id}`);
-    // console.log(data, `number of  post for ${id}`);
-    return data;
-    // dispatch(likesSuccess(data));
+    likes.push(data);
+    console.log(likes);
+    console.log(data, `number of  post for ${id}`);
+    dispatch(likesSuccess(data));
+    return { data, likes };
   } catch (err) {
     dispatch(likesFailure());
   }

@@ -21,8 +21,8 @@ const likesSlice = createSlice({
     },
     createlikesSuccess: (state, action) => {
       state.isFetching = false;
-      state.likes.push(action.payload);
       state.error = false;
+      state.likes.push(action.payload);
     },
     removelikesSuccess: (state, action) => {
       state.isFetching = false;
