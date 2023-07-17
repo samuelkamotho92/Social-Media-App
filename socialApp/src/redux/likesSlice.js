@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const likesSlice = createSlice({
   name: "likes",
   initialState: {
-    likes: [],
+    likes: null,
     isFetching: false,
     error: false,
   },

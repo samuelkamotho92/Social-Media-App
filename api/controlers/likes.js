@@ -35,3 +35,25 @@ export const getLikes = async (req, res) => {
     res.status(404).json(err);
   }
 };
+
+export const deleteLikes = async (req, res) => {
+  const id = req.params.id;
+  let { likesuserId, likespostId } = req.body;
+  try {
+    let pool = await sql.connect(config);
+    let deletedLikes = await pool
+      .request()
+      .input("likesuserId", sql.Int, likesuserId)
+      .input("likespostId", sql.Int, likespostId)
+      .query(
+        `DELETE FROM  likes WHERE  likespostId = ${id}  AND likesuserId= @likesuserId`
+      );
+    console.log(deletedLikes);
+    res.status(200).json({
+      status: "success",
+      data: deletedLikes,
+    });
+  } catch (err) {
+    res.status(404).json(err);
+  }
+};

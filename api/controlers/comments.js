@@ -36,7 +36,7 @@ export const getComments = async (req, res) => {
     let comments = await pool.request().query(
       `SELECT c.*,u.id AS userId,username,profilePic FROM comments AS c JOIN users AS u ON (u.id = c.commentuserId)
        WHERE c.postId = ${postId} ORDER BY c.createdAt DESC
-            `
+      `
     );
     console.log(comments);
     res.status(200).json(comments.recordset);

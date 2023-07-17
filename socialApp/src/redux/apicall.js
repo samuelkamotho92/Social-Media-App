@@ -93,7 +93,6 @@ export const getPosts = async (dispatch, token) => {
   dispatch(postStart());
   try {
     const { data } = await axios.post(`${domain}/posts/getposts`, token);
-    console.log(data);
     dispatch(postSuccess(data));
   } catch (err) {
     dispatch(postFailure());
@@ -178,7 +177,6 @@ export const getStories = async (dispatch) => {
   dispatch(storyStart());
   try {
     const { data } = await axios.get(`${domain}/stories/`);
-    console.log(data);
     dispatch(storySuccess(data));
   } catch (err) {
     dispatch(storyFailure());
@@ -189,10 +187,42 @@ export const getlikePost = async (dispatch, id) => {
   dispatch(likesStart());
   try {
     const { data } = await axios.get(`${domain}/likes/${id}`);
-    console.log(data, `number of  post for ${id}`);
-    dispatch(likesSuccess(data));
+    // console.log(data, `number of  post for ${id}`);
+    return data;
+    // dispatch(likesSuccess(data));
   } catch (err) {
     dispatch(likesFailure());
+  }
+};
+
+export const createlikepost = async (dispatch, data) => {
+  const dataVal = await axios.post(`${domain}/likes/`, data);
+  console.log(dataVal);
+  if (dataVal.data.status == "success") {
+    toast.success(`Post Liked `, {
+      position: "top-center",
+    });
+    console.log("liked post");
+  } else {
+    toast.warning(`Post not liked`, {
+      position: "top-center",
+    });
+  }
+};
+
+export const deletelikepost = async (dispatch, like, id) => {
+  console.log(id);
+  const { data } = await axios.post(`${domain}/likes/${id}`, like);
+  // console.log(dataVal);
+  if (data.status == "success") {
+    toast.success(`Post Unliked `, {
+      position: "top-center",
+    });
+    console.log("liked post");
+  } else {
+    toast.warning(`Something went wrong`, {
+      position: "top-center",
+    });
   }
 };
 

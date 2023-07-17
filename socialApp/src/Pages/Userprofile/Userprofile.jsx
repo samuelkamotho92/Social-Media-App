@@ -16,11 +16,11 @@ import { getuser, getRelationship } from '../../redux/apicall';
 const Userprofile = () => {
   const id = useLocation().pathname.split("/")[2];
   const dispatch = useDispatch();
-  const currentuserid = useSelector((state) => state.user.user.data.id);
-  const userid = useSelector((state) => state.user?.currentUser?.user.id);
-  const user = useSelector((state) => state.user?.currentUser?.user);
-  const following = useSelector((state) => state?.relationship?.follow)[0]
-  console.log(following);
+  const currentuserid = useSelector((state) => state.user?.user?.data?.id);
+  const userid = useSelector((state) => state?.user?.currentUser?.user?.id);
+  const user = useSelector((state) => state?.user?.currentUser?.user);
+  const following = useSelector((state) => state?.relationship?.follow);
+  // console.log(following);
   useEffect(() => {
     getRelationship(dispatch, userid);
     getuser(dispatch, id);

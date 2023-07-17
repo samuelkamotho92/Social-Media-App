@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 const Stories = () => {
     const dispatch = useDispatch();
     const stories = useSelector((state) => state?.story?.stories);
-    console.log(stories)
     useEffect(() => {
         getStories(dispatch);
     }, [])
