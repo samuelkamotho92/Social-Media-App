@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "engines": {
-    "node": ">=v18.16.0"
+    "node": ">=v18.16.1"
   },
   "scripts": {
     "start": "nodemon index.js"

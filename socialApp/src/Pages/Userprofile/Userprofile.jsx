@@ -15,7 +15,7 @@ import { useLocation } from 'react-router-dom';
 import { getuser, getRelationship, deleteRelationship, createRelationship } from '../../redux/apicall';
 import Update from '../../components/update/Update';
 const Userprofile = () => {
-  const [updateComp, setUpdateComp] = useState(true);
+  const [updateComp, setUpdateComp] = useState(false);
   const id = useLocation().pathname.split("/")[2];
   const dispatch = useDispatch();
   const currentuserid = useSelector((state) => state.user?.user?.data?.id);

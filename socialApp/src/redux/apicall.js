@@ -11,6 +11,9 @@ import {
   registerSuccess,
   registerStart,
   userSuccess,
+  updateSuccess,
+  updateStart,
+  updateFailure,
 } from "./userSlice";
 
 import {
@@ -287,4 +290,28 @@ export const deleteRelationship = async (dispatch, data) => {
   } catch (err) {
     dispatch(followFailure());
   }
+};
+
+export const updatedUser = async (dispatch, user, data) => {
+  const id = user.id;
+  console.log(id, data);
+  // dispatch(updateStart());
+  // try {
+  //   const { data } = await axios.post(`${domain}/user/${id}`, user);
+  //   dispatch(updateSuccess(user));
+  //   console.log(data);
+  //   if (data.status === "success") {
+  //     alert("logged  in successfully");
+  //     toast.success(`successfully Registered,head to login page`, {
+  //       position: "top-center",
+  //     });
+  //   } else {
+  //     alert("registration failed,try again later");
+  //     toast.warning(`error while registering the user`, {
+  //       position: "top-center",
+  //     });
+  //   }
+  // } catch (err) {
+  //   dispatch(updateFailure());
+  // }
 };
