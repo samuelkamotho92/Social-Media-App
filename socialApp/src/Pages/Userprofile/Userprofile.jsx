@@ -12,22 +12,33 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { getuser, getRelationship } from '../../redux/apicall';
+import { getuser, getRelationship, deleteRelationship, createRelationship } from '../../redux/apicall';
+import Update from '../../components/update/Update';
 const Userprofile = () => {
+  const [updateComp, setUpdateComp] = useState(true);
   const id = useLocation().pathname.split("/")[2];
   const dispatch = useDispatch();
   const currentuserid = useSelector((state) => state.user?.user?.data?.id);
   const userid = useSelector((state) => state?.user?.currentUser?.user?.id);
   const user = useSelector((state) => state?.user?.currentUser?.user);
   const following = useSelector((state) => state?.relationship?.follow);
-  // console.log(following);
+  console.log(following, currentuserid, userid);
   useEffect(() => {
     getRelationship(dispatch, userid);
     getuser(dispatch, id);
   }, []);
 
   const handleFollow = () => {
-    console.log('stated following')
+    //check if user is being followed then unfollow
+    if (currentuserid == following) {
+      console.log('unfollowed');
+      deleteRelationship(dispatch, { followeruserId: currentuserid, followeduserId: userid })
+    } else {
+      console.log('started following')
+      createRelationship(dispatch, { followeruserId: currentuserid, followeduserId: userid })
+    }
+    //if not following should follow
+    //1)pass the followeruserId:currentuse: and followeduserId:userId
   }
   return (
     <div className='userprofile'>
@@ -63,7 +74,7 @@ const Userprofile = () => {
                 <span>{user?.username}</span>
               </div>
             </div>
-            {currentuserid === userid ? (<button>Update</button>) : <button onClick={handleFollow}>
+            {currentuserid === userid ? (<button onClick={() => setUpdateComp(true)}>Update</button>) : <button onClick={handleFollow}>
               {currentuserid == following ? "following" : "follow"}
             </button>}
           </div>
@@ -77,6 +88,7 @@ const Userprofile = () => {
           </div>
         </div>
       </div>
+      {updateComp && <Update setUpdateComp={setUpdateComp} />}
     </div>
   )
 }

@@ -14,6 +14,7 @@ export const createRelationship = async (req, res) => {
       );
     console.log(createdRelationship);
     res.status(200).json({
+      status: "followed",
       data: createdRelationship,
     });
   } catch (err) {
@@ -36,6 +37,29 @@ export const getrelationships = async (req, res) => {
       .json(
         followers.recordset.map((relationship) => relationship.followeruserId)
       );
+  } catch (err) {
+    res.status(404).json(err);
+  }
+};
+
+export const deleteRelationships = async (req, res) => {
+  let { followeruserId, followeduserId } = req.body;
+  console.log(followeruserId, followeduserId);
+  try {
+    let { followeruserId, followeduserId } = req.body;
+    let pool = await sql.connect(config);
+    let delRelationship = await pool
+      .request()
+      .input("followeruserId", sql.Int, followeruserId)
+      .input("followeduserId", sql.Int, followeduserId)
+      .query(
+        "DELETE FROM relationships WHERE followeruserId = @followeruserId AND followeduserId =  @followeduserId"
+      );
+    console.log(delRelationship);
+    res.status(200).json({
+      status: "unfollowed",
+      data: delRelationship,
+    });
   } catch (err) {
     res.status(404).json(err);
   }

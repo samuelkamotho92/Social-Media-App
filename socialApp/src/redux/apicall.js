@@ -46,7 +46,7 @@ import {
   followStart,
   followFailure,
   followSuccess,
-  createfollowSuccess,
+  createFollowSuccess,
   removefollowSuccess,
 } from "./relationshipSlice";
 
@@ -244,6 +244,46 @@ export const getRelationship = async (dispatch, id) => {
     const { data } = await axios.get(`${domain}/relationships/${id}`);
     console.log(data);
     dispatch(followSuccess(data));
+  } catch (err) {
+    dispatch(followFailure());
+  }
+};
+
+export const createRelationship = async (dispatch, data) => {
+  console.log(data);
+  try {
+    const dataval = await axios.post(`${domain}/relationships/`, data);
+    console.log(dataval.data.status);
+    if (dataval.data.status == "followed") {
+      toast.info(` followed `, {
+        position: "top-center",
+      });
+    } else {
+      toast.warning(`Something went wrong`, {
+        position: "top-center",
+      });
+    }
+    dispatch(createFollowSuccess(1));
+  } catch (err) {
+    dispatch(followFailure());
+  }
+};
+
+export const deleteRelationship = async (dispatch, data) => {
+  console.log(data);
+  try {
+    const dataval = await axios.post(`${domain}/relationships/unfollow`, data);
+    console.log(dataval.data.status);
+    if (dataval.data.status == "unfollowed") {
+      toast.info(` Unfollowed `, {
+        position: "top-center",
+      });
+    } else {
+      toast.warning(`Something went wrong`, {
+        position: "top-center",
+      });
+    }
+    dispatch(removefollowSuccess());
   } catch (err) {
     dispatch(followFailure());
   }

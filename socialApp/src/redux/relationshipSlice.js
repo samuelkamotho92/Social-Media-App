@@ -21,12 +21,12 @@ const followSlice = createSlice({
     },
     createFollowSuccess: (state, action) => {
       state.isFetching = false;
-      state.follow.push(action.payload);
+      state.follow.push(1);
       state.error = false;
     },
     removefollowSuccess: (state, action) => {
       state.isFetching = false;
-      state.follow.pop(action.payload);
+      state.follow.pop();
       state.error = false;
     },
   },
@@ -35,7 +35,7 @@ export const {
   followStart,
   followSuccess,
   followFailure,
-  createfollowSuccess,
+  createFollowSuccess,
   removefollowSuccess,
 } = followSlice.actions;
 export default followSlice.reducer;
