@@ -8,7 +8,7 @@ import { registerUser } from '../../redux/apicall';
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 const Register = () => {
-    const user = useSelector((state) => state.user.user.status);
+    const user = useSelector((state) => state?.user?.user?.status);
     console.log(user)
     const navigate = useNavigate();
     const dispatch = useDispatch();

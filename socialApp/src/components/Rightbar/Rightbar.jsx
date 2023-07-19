@@ -1,6 +1,10 @@
 import React from 'react'
 import './Rightbar.css';
 import profile from '../../assets/profile.jpg';
+import charity from '../../assets/charity.jpg';
+import sam from '../../assets/background.jpg';
+import Del from '../../assets/Del.jpg';
+import Dennis from '../../assets/Denis.jpg';
 const Rightbar = () => {
   return (
     <div className='rightbar'>
@@ -19,8 +23,8 @@ const Rightbar = () => {
           </div>
           <div className='user'>
             <div className='userInfo' alt='samkam'>
-              <img src={profile} />
-              <span>James Ngunga</span>
+              <img src={charity} />
+              <span>Charity Jelimo</span>
             </div>
             <div className='buttons'>
               <button className='follow'>Follow</button>
@@ -40,7 +44,7 @@ const Rightbar = () => {
           </div>
           <div className='user'>
             <div className='userInfo' alt='samkam'>
-              <img src={profile} />
+              <img src={sam} />
               <p>Chris Mureithi </p>
               <p>Liked your post</p>
             </div>
@@ -49,7 +53,7 @@ const Rightbar = () => {
           <div className='user'>
             <div className='userInfo' alt='samkam'>
               <img src={profile} />
-              <p>Judy</p>
+              <p>Samuel</p>
               <p>Commented on your post</p>
             </div>
             <span>1 min Ago</span>
@@ -59,7 +63,7 @@ const Rightbar = () => {
           <span>Online Friends</span>
           <div className='user'>
             <div className='userInfo' alt='samkam'>
-              <img src={profile} />
+              <img src={Del} />
               <div className='online' />
               <span>Moreen Chris</span>
 
@@ -67,9 +71,9 @@ const Rightbar = () => {
           </div>
           <div className='user'>
             <div className='userInfo' alt='samkam'>
-              <img src={profile} />
+              <img src={Dennis} />
               <div className='online' />
-              <span>Jedy</span>
+              <span>Dennis</span>
 
             </div>
           </div>
@@ -77,7 +81,7 @@ const Rightbar = () => {
             <div className='userInfo' alt='samkam'>
               <img src={profile} />
               <div className='online' />
-              <span>Dennis</span>
+              <span>Samuel</span>
 
             </div>
           </div>
