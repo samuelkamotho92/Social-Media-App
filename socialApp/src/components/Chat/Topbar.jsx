@@ -42,9 +42,9 @@ const Topbar = () => {
                     />
                 </div> */}
             </div>
-            <div className='topbarRight'>
+            {/* <div className='topbarRight'>
                 <p>Group</p>
-            </div>
+            </div> */}
         </div>
     )
 }

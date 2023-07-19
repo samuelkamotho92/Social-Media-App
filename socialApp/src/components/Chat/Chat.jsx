@@ -3,7 +3,11 @@ import Topbar from './Topbar'
 import './Chat.css'
 import profile from '../../assets/profile.jpg';
 import { BsFlagFill, BsPeopleFill, BsCodeSlash, BsFillChatLeftDotsFill } from 'react-icons/bs';
+import Conv from './Conv';
+import Groupconv from './Groupconv';
+import Chatonline from './Chatonline';
 import { BiFootball } from 'react-icons/bi';
+import Message from './Message';
 const Chat = () => {
     return (
         <>
@@ -11,58 +15,46 @@ const Chat = () => {
             <div className="messenger">
                 <div className='chatmenu'>
                     <div className="chatMenuWrapper">
-                        <p style={{ textAlign: "center" }}><span>Messages</span><span>20</span></p>
-                        <input type="text" placeholder='football' />
+                        <div className='ft'>
+                            <input type="text" placeholder='football' />
+                        </div>
                         <div className='pinned'>
                             <BsFlagFill />
                             <p>Pin Chats</p>
                         </div>
+                        <Conv name="Mary Mutindi" time="11pm" />
                         <div className='channels'>
                             <BsPeopleFill />
                             <p>Group & Channels</p>
                         </div>
-                        <div className='group'>
-                            <BsCodeSlash />
-                            MLSA
-                        </div>
-                        <div className='group'>
-                            <BiFootball />
-                            Football
-                        </div>
+                        <Groupconv name='MLSA' />
+                        <Groupconv name='Football' />
                         <div className="messages">
                             <BsFillChatLeftDotsFill />
                             <p>All Messages</p>
                         </div>
-                        <div>
-                            <img src={profile} alt='profile' style={{ width: "40px", height: "60px", borderRadius: "50%" }} />
-                            <span>Samuel</span>
-                            <span>9pm</span>
-                        </div>
-                        <div>
-                            <img src={profile} alt='profile' style={{ width: "40px", height: "60px", borderRadius: "50%" }} />
-                            <span>Samuel</span>
-                            <span>9pm</span>
-                        </div>
-                        <div>
-                            <img src={profile} alt='profile' style={{ width: "40px", height: "60px", borderRadius: "50%" }} />
-                            <span>Jospeth</span>
-                            <span>7am</span>
-                        </div>
-                        <div>
-                            <img src={profile} alt='profile' style={{ width: "40px", height: "60px", borderRadius: "50%" }} />
-                            <span>Leader</span>
-                            <span>Typing ...</span>
-                        </div>
+                        <Conv name="Samuel" time="8am" />
+                        <Conv name="John" time="9am" />
                     </div>
                 </div>
                 <div className='chatBox'>
                     <div className="chatBoxWrapper">
-                        box
+                        <div className='chatBoxTop'>
+                            <Message />
+                            <Message own={true} />
+                            <Message />
+                        </div>
+                        <div className='chatboxbottom'>
+                            <textarea className='chatMessageInput' placeholder='Add comment'>Add Comment</textarea>
+                            <button className='chatSubmitButton'>Submit</button>
+                        </div>
                     </div>
                 </div>
                 <div className='chatOnline'>
                     <div className="chatOnlineWrapper">
-                        Group
+                        <Chatonline />
+                        <Chatonline />
+                        <Chatonline />
                     </div>
                 </div>
             </div>
