@@ -10,37 +10,34 @@ import './Post.css';
 import Comments from '../Comments/Comments';
 import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux';
-import { getlikePost, createlikepost, deletelikepost } from '../../redux/apicall';
+import { getlikePost, createlikepost, deletelikepost, deletePost } from '../../redux/apicall';
 import likesSlice from '../../redux/likesSlice';
 const Post = ({ post }) => {
     const dispatch = useDispatch();
     const comments = useSelector((state) => state?.comment?.comments);
     const user = useSelector((state) => state?.user?.user?.data);
+    const token = useSelector((state) => state.user.user.accesToken);
     const likedpost = useSelector((state) => state?.likes?.likes)
     const array = post?.image;
     const string = JSON.stringify(array).replace(/[[\]]/g, '').replace(/'/g, '').replace(/^"|"$/g, '');
     const [commentOpen, setCommentOpen] = useState(false);
+    const [menuOpen, setmenuOpen] = useState(false);
+
     const [likedPost, setLikedPost] = useState();
     let [likedPst, setLikedPst] = useState();
     const liked = true;
     useEffect(() => {
         const getLikes = async () => {
-            const { data, likes } = await getlikePost(dispatch, post.id);
+            const { data, likes } = await getlikePost(dispatch, post?.id);
             console.log(data);
             setLikedPost(data);
             setLikedPst(data.length);
-            // setLikedpost(dt)
         }
         getLikes();
     }, []);
-    console.log(likedPst);
-    console.log(likedPost);
-    // dispatch(likesSlice(likedPost));
-    // console.log(likedpost);
+
     const handleLiked = () => {
-        // console.log('liked post');
-        //check if you ahve already liked the post 
-        if (likedPost?.includes(user.id)) {
+        if (likedPost?.includes(user?.id)) {
             //unlike post
             if (likedPst >= 1) {
                 likedPst = setLikedPst(likedPst - 1);
@@ -60,6 +57,10 @@ const Post = ({ post }) => {
         }
     }
 
+    const handleDelete = () => {
+        console.log("deleted");
+        deletePost(post.id, dispatch, token);
+    }
     return (
         <div className='post'>
             <div className="container">
@@ -73,7 +74,10 @@ const Post = ({ post }) => {
                             <span className='date'>{moment(post.createdAt).fromNow()}</span>
                         </div>
                     </div>
-                    <MoreHorizIcon />
+                    <div>
+                        <MoreHorizIcon onClick={() => setmenuOpen(!menuOpen)} style={{ cursor: "pointer" }} />
+                        {menuOpen && <button onClick={handleDelete} className='btn'>Delete</button>}
+                    </div>
                 </div>
                 <div className="content">
                     <p>{post.description}</p>

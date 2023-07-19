@@ -55,38 +55,29 @@ export const getPosts = async (req, res) => {
   }
 };
 
-//check localstorage or cookie
-
-//     userId =  COALESCE(@userId,userId)
-// export const updatePost = async (req, res) => {
-//   console.log("get data");
-//   const id = req.params.id;
-//   try {
-//     const pool = await sql.connect(config);
-//     let post = await pool
-//       .request()
-//       .input("id", sql.Int, id)
-//       .query("SELECT * FROM posts WHERE id = @id");
-//     res.status(200).json({
-//       status: "success",
-//       posts: post.recordset[0],
-//     });
-//   } catch (error) {
-//     res.status(404).json({ error });
-//   }
-// };
 export const deletePost = async (req, res) => {
+  //pass token  check if token does match the user then delete
+  token = req.body.token;
   const id = req.params.id;
-  try {
-    await sql.connect(config);
-    await sql.query(`DELETE FROM posts WHERE id = ${id}`);
-    res.status(200).json({
-      status: "success",
-      message: "Posts deleted successfully",
-    });
-  } catch (err) {
-    res.status(400).json(err);
-  }
+  jwt.verify(token, "letstalk2023", async (err, decode) => {
+    if (err) {
+      res.status(403).json({
+        status: "unauthorized",
+      });
+    } else {
+      console.log(decode.id, "decode token");
+      let pool = await sql.connect(config);
+      let posts = await pool
+        .request()
+        .query(`DELETE FROM posts WHERE id = ${id} AND userId=${decode.id}`);
+      res.status(204),
+        json({
+          status: "success",
+          message: "successfully deleted",
+          posts,
+        });
+    }
+  });
 };
 
 export const updatePosts = async (req, res) => {

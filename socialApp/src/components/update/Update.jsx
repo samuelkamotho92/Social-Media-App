@@ -6,10 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updatedUser } from '../../redux/apicall';
 const Update = ({ setUpdateComp }) => {
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.user.user.data);
-    console.log(user.city)
-    const [cover, setCover] = useState(null);
-    const [profile, setProfile] = useState(null);
+    const user = useSelector((state) => state.user?.user?.data);
+    console.log(user?.city)
+    const [cover, setCover] = useState(`${user.coverpic}`);
+    const [profile, setProfile] = useState(`${user.profilePic}`);
     const [email, setEmail] = useState(`${user.email}`);
     const [password, setPassword] = useState('password');
     const [username, setUsername] = useState(`${user.username}`);
@@ -19,10 +19,8 @@ const Update = ({ setUpdateComp }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        updatedUser(dispatch, user, { cover, profile, email, password, username, fullnames, city, website });
+        updatedUser(dispatch, user, { coverpic: cover, profilePic: profile, email, password, username, fullnames, city, website });
     }
-
-
     return (
         <div className='update'>
             <div className='wrapper'>
@@ -115,7 +113,7 @@ const Update = ({ setUpdateComp }) => {
                                 />
                             </div>
                             <div>
-                                <label>wEBSITE</label>
+                                <label>Website</label>
                                 <input
                                     type="text"
                                     value={website}

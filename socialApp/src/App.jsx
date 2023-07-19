@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar'
 import Sidebar from './components/Sidebar/Sidebar'
 import Rightbar from './components/Rightbar/Rightbar'
 import Userprofile from './Pages/Userprofile/Userprofile';
+import Chat from './components/Chat/chat';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -25,9 +26,11 @@ import {
   Outlet,
   Navigate
 } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 const queryClient = new QueryClient();
 function App() {
-  const user = true;
+  const user = useSelector((state) => state?.user?.user?.data.username)
+  // const user = true;
   const Layout = () => {
     return (
       // <QueryClientProvider client={queryClient}>
@@ -67,7 +70,7 @@ function App() {
       {
         path: "/profile/:id",
         element: <Userprofile />
-      }
+      },
       ]
     },
     {
@@ -77,6 +80,10 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/chat",
+      element: <Chat />
     }
   ]);
 

@@ -1,5 +1,8 @@
 import config from "../confiq/confiq.js";
 import sql from "mssql";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 export const getAllUsers = async (req, res) => {
   try {
     let pool = await sql.connect(config);
@@ -48,13 +51,14 @@ export const updateUser = async (req, res) => {
     city,
     website,
   } = req.body;
+  const hashedpwd = bcrypt.hashSync(password, 10);
   let pool = await sql.connect(config);
   let updatedUser = await pool
     .request()
     .input("id", sql.Int, id)
     .input("username", sql.VarChar, username)
     .input("email", sql.VarChar, email)
-    .input("password", sql.VarChar, password)
+    .input("password", sql.VarChar, hashedpwd)
     .input("fullnames", sql.VarChar, fullnames)
     .input("coverpic", sql.VarChar, coverpic)
     .input("profilePic", sql.VarChar, profilePic)

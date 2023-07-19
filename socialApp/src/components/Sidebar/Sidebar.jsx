@@ -7,10 +7,12 @@ import { MdNotificationsActive, MdAddCircle, MdOutlineLogout } from 'react-icons
 import { useSelector, useDispatch } from 'react-redux'
 import { logOut } from '../../redux/apicall'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './Sidebar.css';
 const Sidebar = () => {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user?.user?.data.username);
+  const user = useSelector((state) => state.user?.user?.data?.username);
+  console.log(user);
   // const userStatus = useSelector((state) => state.user?.user?.status);
   const dispatch = useDispatch();
   const logoutUser = () => {
@@ -27,11 +29,19 @@ const Sidebar = () => {
           </div>
           <div className='item'>
             <GiThreeFriends />
-            <span>Groups</span>
+            <span>
+              <Link to='/chat' style={{ textDecoration: "none" }}>
+                Groups
+              </Link>
+            </span>
           </div>
           <div className='item'>
             <BsSearch />
-            <span>Messages</span>
+            <span>
+              <Link to='/chat' style={{ textDecoration: "none" }}>
+                Messages
+              </Link>
+            </span>
           </div>
           <div className='item'>
             <MdNotificationsActive />

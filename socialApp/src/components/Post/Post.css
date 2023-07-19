@@ -56,3 +56,11 @@ margin: 20px 0px;
     cursor: pointer;
     font-size: 14px;
 }
+.user .btn{
+ display: flex;
+ margin: 10px auto;
+ cursor: pointer;
+}
+.user .btn:hover{
+    background-color: red;
+}

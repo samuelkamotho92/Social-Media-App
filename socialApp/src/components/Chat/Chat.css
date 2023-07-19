@@ -1,0 +1,40 @@
+.messenger{
+    height: calc(100vh -70px);
+    display: flex;
+}
+.chatmenu{
+    flex: 2.5;
+    position: sticky;
+}
+.chatBox{
+    flex: 6.5;
+}
+.chatOnline{
+    flex: 3;
+    background-color: #DEC9EE;
+    position: sticky;
+}
+.chatMenuWrapper{
+padding: 10px;
+background-color: #DEC9EE;
+height: 100vh;
+}
+.chatBoxWrapper {
+    padding: 10px;
+    background-color: gray;
+    height: 100vh;
+}
+.chatMenuWrapper  p span{
+    margin: 0px 10px;
+}
+.chatMenuWrapper input{
+    margin-top: 10px;
+    background-color: #B2A9A9;
+    border-radius: 20px;
+
+}
+.chatOnlineWrapper{
+    padding: 10px;
+    background-color: #DEC9EE;
+    height: 100vh;
+}

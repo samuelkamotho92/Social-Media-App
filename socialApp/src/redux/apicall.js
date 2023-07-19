@@ -28,6 +28,9 @@ import {
   postSuccess,
   postFailure,
   createPostSuccess,
+  deletePostStart,
+  deletePostSuccess,
+  deletePostFailure,
 } from "./postSlice";
 
 import {
@@ -99,6 +102,17 @@ export const getPosts = async (dispatch, token) => {
     dispatch(postSuccess(data));
   } catch (err) {
     dispatch(postFailure());
+  }
+};
+
+export const deletePost = async (id, dispatch, token) => {
+  console.log(id, token);
+  dispatch(deletePostStart());
+  try {
+    await axios.post(`${domain}/posts/deletePost/${id}`, { token });
+    dispatch(deletePostSuccess(id));
+  } catch (err) {
+    dispatch(deletePostFailure(err));
   }
 };
 
@@ -292,26 +306,24 @@ export const deleteRelationship = async (dispatch, data) => {
   }
 };
 
-export const updatedUser = async (dispatch, user, data) => {
+export const updatedUser = async (dispatch, user, dataVal) => {
   const id = user.id;
-  console.log(id, data);
-  // dispatch(updateStart());
-  // try {
-  //   const { data } = await axios.post(`${domain}/user/${id}`, user);
-  //   dispatch(updateSuccess(user));
-  //   console.log(data);
-  //   if (data.status === "success") {
-  //     alert("logged  in successfully");
-  //     toast.success(`successfully Registered,head to login page`, {
-  //       position: "top-center",
-  //     });
-  //   } else {
-  //     alert("registration failed,try again later");
-  //     toast.warning(`error while registering the user`, {
-  //       position: "top-center",
-  //     });
-  //   }
-  // } catch (err) {
-  //   dispatch(updateFailure());
-  // }
+  console.log(id, dataVal);
+  dispatch(updateStart());
+  try {
+    const { data } = await axios.put(`${domain}/user/${id}`, dataVal);
+    console.log(data);
+    dispatch(updateSuccess(dataVal));
+    if (data.status === "success") {
+      toast.success(`Updated`, {
+        position: "top-center",
+      });
+    } else {
+      toast.warning(`failed to update`, {
+        position: "top-center",
+      });
+    }
+  } catch (err) {
+    dispatch(updateFailure());
+  }
 };
