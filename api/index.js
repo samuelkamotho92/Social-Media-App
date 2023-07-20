@@ -9,6 +9,7 @@ import relationshipRouter from "./routes/relationship.js";
 import cookieParser from "cookie-parser";
 import commentRouter from "./routes/comments.js";
 import likesRouter from "./routes/likes.js";
+import chatRouter from "./routes/chat.js";
 dotenv.config({ path: "./.env" });
 const app = express();
 app.use(cors());
@@ -28,6 +29,7 @@ app.use("/stories", storyRouter);
 app.use("/comments", commentRouter);
 app.use("/relationships", relationshipRouter);
 app.use("/likes", likesRouter);
+app.use("/chat", chatRouter);
 app.listen(process.env.PORT, () => {
   console.log(`server running on port ${process.env.PORT}`);
 });

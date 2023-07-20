@@ -37,6 +37,33 @@ export const getOneUser = async (req, res) => {
   }
 };
 
+export const searchUser = async (req, res) => {
+  try {
+    const user = req.query.username;
+    const email = req.query.email;
+    console.log(user, email);
+    let pool = await sql.connect(config);
+    let userOne = await pool
+      .request()
+      .input("username", sql.VarChar, user)
+      .input("email", sql.VarChar, email)
+      .query(
+        "SELECT * from users WHERE username = @username AND email = @email"
+      );
+    console.log(userOne.recordset[0]);
+    !userOne.recordset[0]
+      ? res.status(404).json({ message: "user not found" })
+      : res.status(200).json({
+          status: "success",
+          user: userOne.recordset[0],
+        });
+  } catch (err) {
+    console.log(err);
+  }
+  //query users
+  //check if user with the name does exist
+};
+
 export const updateUser = async (req, res) => {
   const id = req.params.id;
   console.log(id);
