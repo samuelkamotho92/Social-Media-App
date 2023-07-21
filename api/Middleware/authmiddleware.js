@@ -2,21 +2,23 @@ import jwt from "jsonwebtoken";
 export const verifyToken = async (req, resp, next) => {
   //get from header
   const autheader = req.headers.token;
+
   if (autheader) {
-    const tk = autheader.split(" ")[0];
+    const tk = autheader.split(" ")[1];
+    console.log(tk);
     jwt.verify(tk, process.env.SECRET, (err, user) => {
+      console.log(user);
       if (err) {
         console.log(err);
         return resp.status(403).json("Token is not valid!");
       } else {
         req.user = user;
         console.log(user, "gotten user");
-        next();
       }
     });
   } else {
     req.user = undefined;
-    // resp.status(403).json("Token is not valid!");
+    return resp.status(403).json("Token is not valid!");
   }
   next();
 };
