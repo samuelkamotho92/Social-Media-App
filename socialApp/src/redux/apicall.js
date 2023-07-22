@@ -64,6 +64,13 @@ import {
   chatUserSuccess,
   chatUserFailure,
 } from "./chatSlice";
+
+import {
+  messageStart,
+  messageSuccess,
+  messageFailure,
+  createmessageSuccess,
+} from "./messageSlice";
 export const registerUser = async (dispatch, user) => {
   console.log(user);
   dispatch(registerStart());
@@ -352,6 +359,16 @@ export const chatUser = async (dispatch, id) => {
     console.log(data.user);
     dispatch(chatUserSuccess(data.user));
   } catch (err) {
-    dispatch(chatUserFailure());
+    dispatch(chatUserFailure(err));
+  }
+};
+
+export const getMessage = async (dispatch, id) => {
+  try {
+    const { data } = await axios.get(`${domain}/messages/${id}`);
+    console.log(data.data);
+    dispatch(messageSuccess(data.data));
+  } catch (err) {
+    dispatch(messageFailure(err));
   }
 };

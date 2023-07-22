@@ -6,6 +6,7 @@ import storiesSlice from "./storiesSlice";
 import likesSlice from "./likesSlice";
 import relationshipSlice from "./relationshipSlice";
 import chatSlice from "./chatSlice";
+import messageSlice from "./messageSlice";
 import {
   persistStore,
   persistReducer,
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   likes: likesSlice,
   relationship: relationshipSlice,
   chat: chatSlice,
+  message: messageSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

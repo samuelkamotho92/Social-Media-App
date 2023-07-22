@@ -2,6 +2,7 @@ import config from "../confiq/confiq.js";
 import sql from "mssql";
 import jwt from "jsonwebtoken";
 import moment from "moment";
+
 let token;
 export const createPost = async (req, res) => {
   // console.log(req.body);
