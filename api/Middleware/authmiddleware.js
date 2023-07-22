@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 export const verifyToken = async (req, resp, next) => {
   //get from header
   const autheader = req.headers.token;
-
   if (autheader) {
     const tk = autheader.split(" ")[1];
     console.log(tk);

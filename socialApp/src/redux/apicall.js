@@ -56,6 +56,14 @@ import {
   removefollowSuccess,
 } from "./relationshipSlice";
 
+import {
+  chatStart,
+  chatSuccess,
+  chatFailure,
+  createChatSuccess,
+  chatUserSuccess,
+  chatUserFailure,
+} from "./chatSlice";
 export const registerUser = async (dispatch, user) => {
   console.log(user);
   dispatch(registerStart());
@@ -325,5 +333,25 @@ export const updatedUser = async (dispatch, user, dataVal) => {
     }
   } catch (err) {
     dispatch(updateFailure());
+  }
+};
+
+export const getChats = async (dispatch, id) => {
+  try {
+    const { data } = await axios.get(`${domain}/chat/${id}`);
+    console.log(data.data);
+    dispatch(chatSuccess(data.data));
+  } catch (err) {
+    dispatch(chatFailure(err));
+  }
+};
+
+export const chatUser = async (dispatch, id) => {
+  try {
+    const { data } = await axios.get(`${domain}/user/${id}`);
+    console.log(data.user);
+    dispatch(chatUserSuccess(data.user));
+  } catch (err) {
+    dispatch(chatUserFailure());
   }
 };

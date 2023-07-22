@@ -8,7 +8,28 @@ import Groupconv from './Groupconv';
 import Chatonline from './Chatonline';
 import { BiFootball } from 'react-icons/bi';
 import Message from './Message';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getChats, chatUser } from '../../redux/apicall';
+import ChatBox from './ChatBox';
+
 const Chat = () => {
+    const dispatch = useDispatch();
+    const [currentChat, setCurrentChat] = useState(null);
+    //fecth current user
+    const user = useSelector((state) => state.user?.user?.data);
+    const chat = useSelector((state) => state.chat?.chats);
+    chat.map((chat) => console.log(typeof chat.members));
+    useEffect(() => {
+        getChats(dispatch, user.id);
+    }, []);
+
+    const updateChat = async (chat, id) => {
+        setCurrentChat(chat);
+        chatUser(dispatch, id);
+    }
+
     return (
         <>
             <Topbar />
@@ -33,23 +54,24 @@ const Chat = () => {
                             <BsFillChatLeftDotsFill />
                             <p>All Messages</p>
                         </div>
-                        <Conv name="Samuel" time="8am" />
-                        <Conv name="John" time="9am" />
+                        {chat?.map((chat) => {
+                            const members = JSON.parse(chat.members)
+                            console.log(typeof JSON.parse(chat.members));
+                            console.log(chat.members);
+                            const id = members?.find((id) => id !== user.id);
+                            console.log(id);
+                            // const id = chat?.members?.find((id) => id !== user.id);
+                            // console.log(id);
+                            return (
+                                <div onClick={() => updateChat(chat, id)} key={chat.id}>
+                                    <Conv data={chat} user={user.id} members={members} />
+                                </div>
+                            )
+                        }
+                        )}
                     </div>
                 </div>
-                <div className='chatBox'>
-                    <div className="chatBoxWrapper">
-                        <div className='chatBoxTop'>
-                            <Message />
-                            <Message own={true} />
-                            <Message />
-                        </div>
-                        <div className='chatboxbottom'>
-                            <textarea className='chatMessageInput' placeholder='Add comment'>Add Comment</textarea>
-                            <button className='chatSubmitButton'>Submit</button>
-                        </div>
-                    </div>
-                </div>
+                <ChatBox chat={currentChat} currentUser={user.id} />
                 <div className='chatOnline'>
                     <div className="chatOnlineWrapper">
                         <Chatonline />

@@ -44,3 +44,16 @@ CREATE TABLE likes
     FOREIGN KEY (postuserId) REFERENCES posts(id)
 );
 sp_rename 'likes.postuserId', 'likespostId', 'COLUMN';
+ALTER TABLE message
+ADD chatId INT;
+
+-- Step 2: Add the foreign key constraint on the new column, referencing the primary key in the referenced table
+ALTER TABLE message
+ADD CONSTRAINT FK_Chat_Id
+FOREIGN KEY (ChatID) REFERENCES chat (id);
+
+ALTER TABLE message
+ADD senderId INT;
+ALTER TABLE message
+ADD CONSTRAINT FK_Sender_Id
+FOREIGN KEY (senderId) REFERENCES users (id);

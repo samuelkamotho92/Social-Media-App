@@ -6,7 +6,10 @@ import './Topbar.css';
 import status1 from '../../assets/storyone.jpg'
 import status2 from '../../assets/storytwo.jpg'
 import status3 from '../../assets/story3.jpg';
+import { useSelector } from 'react-redux';
 const Topbar = () => {
+    const user = useSelector((state) => state?.chat.chatUser);
+    console.log(user);
     return (
         <div className='topbarContainer'>
             <div className="topbarLeft">
@@ -26,8 +29,8 @@ const Topbar = () => {
                     <BsCodeSlash style={{ cursor: "pointer", fontSize: '24px' }} />
                 </div>
                 <div>
-                    <h2 style={{ textAlign: "center" }}>MLSA</h2>
-                    <p style={{ textAlign: "center" }}><span>20 members</span><span>12 online</span></p>
+                    <h2 style={{ textAlign: "center" }}>{user.username}</h2>
+                    {/* <p style={{ textAlign: "center" }}><span>20 members</span><span>12 online</span></p> */}
                 </div>
                 <div>
                     <BsFillTelephoneFill style={{ cursor: "pointer", fontSize: '24px' }} />

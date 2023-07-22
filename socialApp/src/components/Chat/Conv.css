@@ -12,3 +12,13 @@
 .conversation:hover{
     background-color: gray;
 }
+.online-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color:red;
+    position: absolute;
+    left: 3.5rem;
+    /* top: 0px;    */
+   /* right: 2px; */
+  }
