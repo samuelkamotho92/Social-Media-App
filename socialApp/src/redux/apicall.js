@@ -366,9 +366,24 @@ export const chatUser = async (dispatch, id) => {
 export const getMessage = async (dispatch, id) => {
   try {
     const { data } = await axios.get(`${domain}/messages/${id}`);
-    console.log(data.data);
-    dispatch(messageSuccess(data.data));
+    console.log(data);
+    dispatch(messageSuccess(data));
   } catch (err) {
     dispatch(messageFailure(err));
+  }
+};
+
+export const createMessage = async (dispatch, message) => {
+  console.log(message);
+  try {
+    const data = await axios.post(`${domain}/messages/`, message);
+    console.log(data);
+    dispatch(createmessageSuccess(message));
+  } catch (err) {
+    dispatch(messageFailure(err));
+    console.log(err);
+    toast.warning(`message not sent`, {
+      position: "top-center",
+    });
   }
 };

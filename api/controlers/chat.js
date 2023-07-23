@@ -7,7 +7,6 @@ export const accessChat = async (req, res) => {
 
   const id = req.body.id;
   console.log(id);
-  x;
   //check chat has the id==userId  and isGroupchat=false
   //get user info except password
   //get lates message
@@ -19,7 +18,7 @@ export const getChats = async (req, res) => {
     let pool = await sql.connect(config);
     let posts = await pool
       .request()
-      .query(`SELECT * FROM chat WHERE userId=${id}`);
+      .query(`SELECT * FROM chat WHERE userId=${id} OR members LIKE '%${id}%'`);
     console.log(posts);
     res.status(200).json({
       status: "success",

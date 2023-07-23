@@ -57,3 +57,6 @@ ADD senderId INT;
 ALTER TABLE message
 ADD CONSTRAINT FK_Sender_Id
 FOREIGN KEY (senderId) REFERENCES users (id);
+UPDATE message
+SET createdAt = '2023-07-22 19:20:23.000'
+WHERE id = 1;

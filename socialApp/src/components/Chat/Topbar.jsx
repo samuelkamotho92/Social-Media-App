@@ -8,7 +8,7 @@ import status2 from '../../assets/storytwo.jpg'
 import status3 from '../../assets/story3.jpg';
 import { useSelector } from 'react-redux';
 const Topbar = () => {
-    const user = useSelector((state) => state?.chat.chatUser);
+    const user = useSelector((state) => state?.chat?.chatUser);
     console.log(user);
     return (
         <div className='topbarContainer'>
@@ -29,7 +29,7 @@ const Topbar = () => {
                     <BsCodeSlash style={{ cursor: "pointer", fontSize: '24px' }} />
                 </div>
                 <div>
-                    <h2 style={{ textAlign: "center" }}>{user.username}</h2>
+                    <h2 style={{ textAlign: "center" }}>{user?.username}</h2>
                     {/* <p style={{ textAlign: "center" }}><span>20 members</span><span>12 online</span></p> */}
                 </div>
                 <div>
