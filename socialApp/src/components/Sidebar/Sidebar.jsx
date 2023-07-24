@@ -47,10 +47,6 @@ const Sidebar = () => {
             <MdNotificationsActive />
             <span>Notifications</span>
           </div>
-          <div className='item'>
-            <MdAddCircle />
-            <span>Create Post</span>
-          </div>
           <div className='item' >
             <MdOutlineLogout />
             <span onClick={() => logoutUser()} style={{ cursor: "pointer" }}>Log Out</span>

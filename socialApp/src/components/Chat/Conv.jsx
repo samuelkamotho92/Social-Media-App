@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { domain } from '../../utils/utils';
 const Conv = ({ data, user, members, onlineUsers }) => {
+    console.log(onlineUsers);
     const [userInfo, setUser] = useState([]);
     const dispatch = useDispatch();
     // const user = useSelector((state) => state.currentUser.user);
@@ -26,9 +27,10 @@ const Conv = ({ data, user, members, onlineUsers }) => {
         const id = members?.find((id) => id !== user);
         console.log(id);
         // const chatMember = chat?.members?.find((member) => member !== user?.id);
-        const online = onlineUsers?.find((user) => user?.id === id)
+        const online = onlineUsers?.find((user) => user?.userId === id)
         return online ? true : false;
     }
+    console.log(onlineStatus());
     return (
         <div className='conversation'>
             {onlineStatus() && <div className='online-dot'></div>}

@@ -22,7 +22,9 @@ const Topbar = () => {
                 <div>
                     <img src={status3} alt='status 1' />
                 </div>
-                <BsFillArrowRightSquareFill className='iconbtn' style={{ cursor: "pointer", fontSize: '32px' }} />
+                <Link to='/' style={{ textDecoration: "none" }}>
+                    <BsFillArrowRightSquareFill className='iconbtn' style={{ cursor: "pointer", fontSize: '32px' }} />
+                </Link>
             </div>
             <div className="topbarCenter">
                 <div>

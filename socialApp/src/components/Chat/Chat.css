@@ -1,28 +1,34 @@
 .messenger{
     display: flex;
 }
-.chatmenu{
+ .chatmenu{
     top: 50px;
-    height: calc(100vh -70px);
+    height: 100vh;
     flex: 2.5;
     position: sticky;
     overflow: scroll;
     &::-webkit-scrollbar{
         display: none;
-    }
+    },
 }
 .chatBox{
     flex: 6.5;
 }
 .chatOnline{
-    /* height: 100vh; */
     flex: 3;
     background-color: #DEC9EE; 
     position: sticky;
+    /* z-index: -1; */
 }
+
 .chatMenuWrapper{
 padding: 10px;
 background-color: #DEC9EE;
+height: 100%;
+flex: 2.5;
+position: sticky;
+overflow: scroll;
+overflow-x: hidden;
 }
 .ft{
     display: flex;
@@ -45,6 +51,7 @@ background-color: #DEC9EE;
 }
 .chatOnlineWrapper{
     flex: 3;
+    z-index: 999;
 }
 .pinned ,.channels  , .messages{
     display: flex;
