@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Message from './Message';
 import './Chat.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { getMessage, createMessage } from '../../redux/apicall';
+import { getMessage, createMessage, addMessage } from '../../redux/apicall';
 import InputEmoji from 'react-input-emoji'
 import { useState } from 'react';
 import moment from 'moment';
-const ChatBox = ({ chat, currentUser, setSendMessage }) => {
+const ChatBox = ({ chat, currentUser, currentMember, setSendMessage, receiveMessage }) => {
+    console.log(receiveMessage);
+    const user = useSelector((state) => state?.user?.user?.data);
     const id = chat?.id;
-    console.log(id);
+    const receiverId = currentMember;
     const dispatch = useDispatch();
     const messages = useSelector((state) => state?.message?.messages);
-    console.log(messages);
-    const user = useSelector((state) => state?.user?.user?.data);
-    // console.log(messages, user.id, messages.senderId);
     const [newmessage, setNewMessage] = useState("");
-    // const []
+    const [mess, setMess] = useState([]);
+    useEffect(() => {
+        if (receiveMessage !== null && receiveMessage.chatId === chat?.id) {
+            addMessage(dispatch, receiveMessage);
+        }
+    }, [receiveMessage]);
+
     useEffect(() => {
         console.log(chat?.id);
         getMessage(dispatch, id);
@@ -35,10 +40,8 @@ const ChatBox = ({ chat, currentUser, setSendMessage }) => {
         }
         createMessage(dispatch, message);
         setNewMessage("");
-
         //receiverId
-
-
+        setSendMessage({ ...message, receiverId });
     }
     return (
         <div className='chatBox'>

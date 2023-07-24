@@ -18,8 +18,10 @@ const Chat = () => {
 
     const dispatch = useDispatch();
     const [currentChat, setCurrentChat] = useState(null);
+    const [currentMember, setCurrentMember] = useState();
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [sendMessage, setSendMessage] = useState(null);
+    const [receiveMessage, setreceiveMessage] = useState(null);
     //fecth current user
     const user = useSelector((state) => state.user?.user?.data);
     console.log(user.id);
@@ -28,6 +30,16 @@ const Chat = () => {
     console.log(chat, 'all chats');
     // chat?.map((chat) => console.log(typeof chat?.members));
     const socket = useRef();
+    //send message to socket server
+    useEffect(() => {
+        if (sendMessage !== null) {
+            socket?.current?.emit('send-message', sendMessage)
+        }
+    }, [sendMessage])
+
+
+
+    //initial socket
     useEffect(() => {
         socket.current = io("http://localhost:8080");
         //subscribe to event which is connecting
@@ -40,15 +52,34 @@ const Chat = () => {
     }, [user]);
     console.log(onlineUsers);
 
+    //receive messgae
+    useEffect(() => {
+        socket?.current?.on("receive-message", (data) => {
+            console.log(data);
+            setreceiveMessage(data)
+        })
+    }, [])
+
+
     useEffect(() => {
         getChats(dispatch, user?.id);
     }, []);
 
     const updateChat = async (chat, id) => {
         setCurrentChat(chat);
+        setCurrentMember(id);
         chatUser(dispatch, id);
     }
+    console.log(chat);
+    const onlineStatus = (chat) => {
+        console.log(chat.members);
+        // const chatMember = chat?.members?.find((member) => member !== user?.id);
 
+        // const online = onlineUsers?.find((user) => user?.id === chatMember)
+        // return online ? true : false;
+    }
+
+    //online={onlineStatus(chat)}
     return (
         <>
             <Topbar />
@@ -75,22 +106,17 @@ const Chat = () => {
                         </div>
                         {chat?.map((chat) => {
                             const members = JSON.parse(chat?.members)
-                            console.log(typeof JSON.parse(chat?.members));
-                            console.log(chat?.members);
                             const id = members?.find((id) => id !== user?.id);
-                            console.log(id);
-                            // const id = chat?.members?.find((id) => id !== user.id);
-                            // console.log(id);
                             return (
                                 <div onClick={() => updateChat(chat, id)} key={chat?.id}>
-                                    <Conv data={chat} user={user?.id} members={members} />
+                                    <Conv data={chat} user={user?.id} members={members} onlineUsers={onlineUsers} />
                                 </div>
                             )
                         }
                         )}
                     </div>
                 </div>
-                <ChatBox chat={currentChat} currentUser={user?.id} setSendMessage={setSendMessage} />
+                <ChatBox chat={currentChat} currentUser={user?.id} currentMember={currentMember} setSendMessage={setSendMessage} receiveMessage={receiveMessage} />
                 <div className='chatOnline'>
                     <div className="chatOnlineWrapper">
                         <Chatonline />

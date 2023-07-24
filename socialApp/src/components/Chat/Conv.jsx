@@ -7,7 +7,7 @@ import { getuser, chatUser } from '../../redux/apicall';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { domain } from '../../utils/utils';
-const Conv = ({ data, user, members }) => {
+const Conv = ({ data, user, members, onlineUsers }) => {
     const [userInfo, setUser] = useState([]);
     const dispatch = useDispatch();
     // const user = useSelector((state) => state.currentUser.user);
@@ -21,11 +21,19 @@ const Conv = ({ data, user, members }) => {
         }
         getUserinfo();
     }, []);
+
+    const onlineStatus = () => {
+        const id = members?.find((id) => id !== user);
+        console.log(id);
+        // const chatMember = chat?.members?.find((member) => member !== user?.id);
+        const online = onlineUsers?.find((user) => user?.id === id)
+        return online ? true : false;
+    }
     return (
         <div className='conversation'>
-            <div className='online-dot'></div>
+            {onlineStatus() && <div className='online-dot'></div>}
             <img src={userInfo.profilePic} alt='profile' style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
-            <span>Online</span>
+            <span>{onlineStatus() ? "Online" : "Offline"}</span>
             <span style={{ color: "black" }}>{userInfo?.username}</span>
         </div>
     )

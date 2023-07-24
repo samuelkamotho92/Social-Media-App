@@ -387,3 +387,11 @@ export const createMessage = async (dispatch, message) => {
     });
   }
 };
+export const addMessage = async (dispatch, message) => {
+  console.log(message);
+  try {
+    dispatch(createmessageSuccess(message));
+  } catch (err) {
+    console.log(err);
+  }
+};
