@@ -107,3 +107,38 @@ export const updateUser = async (req, res) => {
     user: updatedUser,
   });
 };
+
+export const suggestedUsers = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    let pool = await sql.connect(config);
+    const result = await pool
+      .request()
+      .input("userId", sql.Int, userId)
+      .query(
+        `
+        SELECT TOP 5 *
+        FROM users u
+        WHERE u.id <> @userId
+          AND NOT EXISTS (
+            SELECT *
+            FROM relationships r
+            WHERE r.followeruserId = @userId AND r.followeduserId = u.id
+          )
+        ORDER BY NEWID()
+`
+      );
+    console.log(result);
+    res.status(200).json(result.recordset);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json(err);
+  }
+};
+
+//SELECT * FROM users WHERE id NOT IN (
+// AND u.id NOT IN (
+//   SELECT followeduserId
+//   FROM relationships
+//   WHERE followeruserId = @userId
+// )

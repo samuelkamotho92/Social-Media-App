@@ -14,6 +14,7 @@ import {
   updateSuccess,
   updateStart,
   updateFailure,
+  suggestedSuccess,
 } from "./userSlice";
 
 import {
@@ -356,7 +357,6 @@ export const getChats = async (dispatch, id) => {
 export const chatUser = async (dispatch, id) => {
   try {
     const { data } = await axios.get(`${domain}/user/${id}`);
-    console.log(data.user);
     dispatch(chatUserSuccess(data.user));
   } catch (err) {
     dispatch(chatUserFailure(err));
@@ -366,7 +366,6 @@ export const chatUser = async (dispatch, id) => {
 export const getMessage = async (dispatch, id) => {
   try {
     const { data } = await axios.get(`${domain}/messages/${id}`);
-    console.log(data);
     dispatch(messageSuccess(data));
   } catch (err) {
     dispatch(messageFailure(err));
@@ -374,23 +373,28 @@ export const getMessage = async (dispatch, id) => {
 };
 
 export const createMessage = async (dispatch, message) => {
-  console.log(message);
   try {
     const data = await axios.post(`${domain}/messages/`, message);
-    console.log(data);
     dispatch(createmessageSuccess(message));
   } catch (err) {
     dispatch(messageFailure(err));
-    console.log(err);
     toast.warning(`message not sent`, {
       position: "top-center",
     });
   }
 };
 export const addMessage = async (dispatch, message) => {
-  console.log(message);
   try {
     dispatch(createmessageSuccess(message));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getSuggested = async (dispatch, id) => {
+  try {
+    const { data } = await axios.get(`${domain}/user/suggested/${id}`);
+    dispatch(suggestedSuccess(data));
   } catch (err) {
     console.log(err);
   }

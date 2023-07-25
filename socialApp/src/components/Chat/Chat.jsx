@@ -70,16 +70,7 @@ const Chat = () => {
         setCurrentMember(id);
         chatUser(dispatch, id);
     }
-    console.log(chat);
-    const onlineStatus = (chat) => {
-        console.log(chat.members);
-        // const chatMember = chat?.members?.find((member) => member !== user?.id);
 
-        // const online = onlineUsers?.find((user) => user?.id === chatMember)
-        // return online ? true : false;
-    }
-
-    //online={onlineStatus(chat)}
     return (
         <>
             <Topbar />

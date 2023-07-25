@@ -1,36 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Rightbar.css';
 import profile from '../../assets/profile.jpg';
 import charity from '../../assets/charity.jpg';
 import sam from '../../assets/background.jpg';
 import Del from '../../assets/Del.jpg';
 import Dennis from '../../assets/Denis.jpg';
+import { useSelector, useDispatch } from 'react-redux';
+import { getSuggested } from '../../redux/apicall'
 const Rightbar = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user?.user?.data)
+  const suggested = useSelector((state) => state.user?.suggestedUser);
+  console.log(suggested);
+  useEffect(() => {
+    getSuggested(dispatch, user.id);
+  }, []);
   return (
     <div className='rightbar'>
       <div className="container">
         <div className="item">
-          <span>Friend Requests</span>
-          <div className='user'>
-            <div className='userInfo' alt='samkam'>
-              <img src={profile} />
-              <span>James Ngunga</span>
-            </div>
-            <div className='buttons'>
-              <button className='follow'>Follow</button>
-              <button className='reject'>Reject</button>
-            </div>
-          </div>
-          <div className='user'>
-            <div className='userInfo' alt='samkam'>
-              <img src={charity} />
-              <span>Charity Jelimo</span>
-            </div>
-            <div className='buttons'>
-              <button className='follow'>Follow</button>
-              <button className='reject'>Reject</button>
-            </div>
-          </div>
+          <span>Friend Suggestions</span>
+          {
+            suggested?.map((user) => (
+              <div className='user' key={user.id}>
+                <div className='userInfo' alt='samkam'>
+                  <img src={user.profilePic} />
+                  <span>{user.username}</span>
+                </div>
+                <div className='buttons'>
+                  <button className='follow'>Follow</button>
+                  <button className='reject'>Reject</button>
+                </div>
+              </div>
+            ))
+          }
         </div>
         <div className="item">
           <span>Notifications</span>

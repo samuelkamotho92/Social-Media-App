@@ -4,6 +4,7 @@ const userSlice = createSlice({
   initialState: {
     user: null,
     currentUser: null,
+    suggestedUser: null,
     isFetching: false,
     error: false,
   },
@@ -52,6 +53,11 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+    suggestedSuccess: (state, action) => {
+      state.isFetching = false;
+      state.error = false;
+      state.suggestedUser = action.payload;
+    },
   },
 });
 export const {
@@ -66,5 +72,6 @@ export const {
   updateSuccess,
   updateStart,
   updateFailure,
+  suggestedSuccess,
 } = userSlice.actions;
 export default userSlice.reducer;
