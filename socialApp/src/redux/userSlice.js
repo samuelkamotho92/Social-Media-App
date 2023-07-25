@@ -58,6 +58,13 @@ const userSlice = createSlice({
       state.error = false;
       state.suggestedUser = action.payload;
     },
+    followSuggestedSuccess: (state, action) => {
+      state.isFetching = false;
+      state.suggestedUser.splice(
+        state.suggestedUser.findIndex((user) => user.id === action.payload),
+        1
+      );
+    },
   },
 });
 export const {
@@ -73,5 +80,6 @@ export const {
   updateStart,
   updateFailure,
   suggestedSuccess,
+  followSuggestedSuccess,
 } = userSlice.actions;
 export default userSlice.reducer;

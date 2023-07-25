@@ -28,6 +28,7 @@ io.on("connection", (socket) => {
     console.log("data", data);
     if (user) {
       io.to(user.socketId).emit("receive-message", data);
+      //send notification to user
     }
   });
 
@@ -38,4 +39,19 @@ io.on("connection", (socket) => {
     //send back active users
     io.emit("get-users", activeUsers);
   });
+
+  socket.on(
+    "sendnotification",
+    ({ senderName, receiverName, receiverId, type }) => {
+      const user = activeUsers.find((user) => user.userId === receiverId);
+      console.log(user);
+      io.to(user.socketId).emit("getnotifications", {
+        senderName,
+        receiverName,
+        type,
+      });
+    }
+  );
+
+  //notifcations
 });

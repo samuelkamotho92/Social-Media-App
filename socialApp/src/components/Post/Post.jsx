@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
@@ -12,8 +12,10 @@ import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux';
 import { getlikePost, createlikepost, deletelikepost, deletePost } from '../../redux/apicall';
 import likesSlice from '../../redux/likesSlice';
+import { io } from 'socket.io-client';
 const Post = ({ post }) => {
     const dispatch = useDispatch();
+    const socket = useRef();
     const comments = useSelector((state) => state?.comment?.comments);
     const user = useSelector((state) => state?.user?.user?.data);
     const token = useSelector((state) => state.user.user.accesToken);
@@ -22,6 +24,7 @@ const Post = ({ post }) => {
     const string = JSON.stringify(array).replace(/[[\]]/g, '').replace(/'/g, '').replace(/^"|"$/g, '');
     const [commentOpen, setCommentOpen] = useState(false);
     const [menuOpen, setmenuOpen] = useState(false);
+    const [onlineUsers, setOnlineUsers] = useState([]);
 
     const [likedPost, setLikedPost] = useState();
     let [likedPst, setLikedPst] = useState();
@@ -36,23 +39,48 @@ const Post = ({ post }) => {
         getLikes();
     }, []);
 
+    useEffect(() => {
+        //get username based on the userId
+        socket.current = io("http://localhost:8080")
+        socket?.current?.emit("new-user-add", post?.userId)
+        socket?.current?.on("get-users", (users) => {
+            console.log('check user', users);
+            setOnlineUsers(users);
+        })
+    }, []);
+
+    const handleNotification = (receiverName, receiverId, type) => {
+        socket.current.emit('sendnotification', {
+            senderName: user.username,
+            receiverName,
+            receiverId,
+            type
+        })
+        console.log(user.username, receiverName);
+
+    }
+
     const handleLiked = () => {
         if (likedPost?.includes(user?.id)) {
             //unlike post
             if (likedPst >= 1) {
                 likedPst = setLikedPst(likedPst - 1);
                 deletelikepost(dispatch, { likesuserId: user.id, likespostId: post.id }, post.id);
+                handleNotification(post.username, post.userId, 1);
             } else {
                 likedPst = setLikedPst(likedPst + 1);
                 createlikepost(dispatch, { likesuserId: user.id, likespostId: post.id });
+                handleNotification(post.username, post.userId, 1);
             }
         } else {
             if (likedPst <= 0) {
                 likedPst = setLikedPst(likedPst + 1);
                 createlikepost(dispatch, { likesuserId: user.id, likespostId: post.id });
+                handleNotification(post.username, post.userId, 1);
             } else {
                 likedPst = setLikedPst(likedPst - 1);
                 deletelikepost(dispatch, { likesuserId: user.id, likespostId: post.id }, post.id);
+                handleNotification(post.username, post.userId, 1);
             }
         }
     }

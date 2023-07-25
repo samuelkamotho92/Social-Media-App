@@ -43,9 +43,9 @@ const Chat = () => {
     useEffect(() => {
         socket.current = io("http://localhost:8080");
         //subscribe to event which is connecting
-        socket.current.emit("new-user-add", user?.id)
+        socket.current?.emit("new-user-add", user?.id)
         //get active users on frontned emit the same name
-        socket.current.on("get-users", (users) => {
+        socket.current?.on("get-users", (users) => {
             console.log('check user');
             setOnlineUsers(users);
         })
@@ -108,16 +108,13 @@ const Chat = () => {
                     </div>
                 </div>
                 <ChatBox chat={currentChat} currentUser={user?.id} currentMember={currentMember} setSendMessage={setSendMessage} receiveMessage={receiveMessage} />
-                <div className='chatOnline'>
+                {/* <div className='chatOnline'>
                     <div className="chatOnlineWrapper">
-                        {/* fetch all users */}
-
-                        {/* <Conv /> */}
                         <Chatonline />
                         <Chatonline />
                         <Chatonline />
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     )

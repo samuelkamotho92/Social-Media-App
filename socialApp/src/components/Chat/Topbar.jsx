@@ -35,9 +35,9 @@ const Topbar = () => {
                     {/* <p style={{ textAlign: "center" }}><span>20 members</span><span>12 online</span></p> */}
                 </div>
                 <div>
-                    <BsFillTelephoneFill style={{ cursor: "pointer", fontSize: '24px' }} />
-                    <BsSearch style={{ cursor: "pointer", fontSize: '24px' }} />
-                    <BsThreeDotsVertical style={{ cursor: "pointer", fontSize: '24px' }} />
+                    <BsFillTelephoneFill style={{ cursor: "pointer", fontSize: '24px' }} className="iconlogo" />
+                    <BsSearch style={{ cursor: "pointer", fontSize: '24px' }} className="iconlogo" />
+                    <BsThreeDotsVertical style={{ cursor: "pointer", fontSize: '24px' }} className="iconlogo" />
                 </div>
                 {/* <div className="searchbar">
                     <FaSearch className="searchIcon" />

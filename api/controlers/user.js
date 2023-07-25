@@ -117,16 +117,16 @@ export const suggestedUsers = async (req, res) => {
       .input("userId", sql.Int, userId)
       .query(
         `
-        SELECT TOP 5 *
-        FROM users u
-        WHERE u.id <> @userId
-          AND NOT EXISTS (
-            SELECT *
-            FROM relationships r
-            WHERE r.followeruserId = @userId AND r.followeduserId = u.id
-          )
-        ORDER BY NEWID()
-`
+          SELECT TOP 5 *
+          FROM users u
+          WHERE u.id <> @userId
+            AND NOT EXISTS (
+              SELECT *
+              FROM relationships r
+              WHERE r.followeruserId = @userId AND r.followeduserId = u.id
+            )
+          ORDER BY NEWID()
+  `
       );
     console.log(result);
     res.status(200).json(result.recordset);

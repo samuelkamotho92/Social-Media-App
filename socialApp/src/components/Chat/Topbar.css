@@ -1,6 +1,6 @@
 .topbarContainer {
     height: 100px;
-    width: 75%;
+    width: 100%;
     background-color:white;
     display: flex;  
     justify-content: center;
@@ -45,7 +45,7 @@
   }
   
   .topbarCenter {
-    flex: 9;
+    flex: 11;
     height: 100%;
     display: flex;
     background-color: #B2A9A9;
@@ -131,4 +131,9 @@
     .topbarLink{
       display: none;
     }
+  }
+
+  .iconlogo{
+    display: "flex";
+    margin: auto 20px;
   }

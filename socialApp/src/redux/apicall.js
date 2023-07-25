@@ -15,6 +15,7 @@ import {
   updateStart,
   updateFailure,
   suggestedSuccess,
+  followSuggestedSuccess,
 } from "./userSlice";
 
 import {
@@ -302,6 +303,25 @@ export const createRelationship = async (dispatch, data) => {
   }
 };
 
+export const followSuggested = async (dispatch, data, user) => {
+  try {
+    const dataval = await axios.post(`${domain}/relationships/`, data);
+    console.log(dataval.data.status);
+    if (dataval.data.status == "followed") {
+      toast.info(`${user.username} followed successfully `, {
+        position: "top-center",
+      });
+    } else {
+      toast.warning(`Something went wrong`, {
+        position: "top-center",
+      });
+    }
+    dispatch(followSuggestedSuccess(user.id));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const deleteRelationship = async (dispatch, data) => {
   console.log(data);
   try {
@@ -392,8 +412,10 @@ export const addMessage = async (dispatch, message) => {
 };
 
 export const getSuggested = async (dispatch, id) => {
+  console.log("check suggested");
   try {
     const { data } = await axios.get(`${domain}/user/suggested/${id}`);
+    console.log(data);
     dispatch(suggestedSuccess(data));
   } catch (err) {
     console.log(err);
