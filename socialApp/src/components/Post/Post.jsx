@@ -39,19 +39,29 @@ const Post = ({ post }) => {
         getLikes();
     }, []);
 
-    useEffect(() => {
-        //get username based on the userId
-        socket.current = io("http://localhost:8080")
-        socket?.current?.emit("new-user-add", post?.userId)
-        socket?.current?.on("get-users", (users) => {
-            console.log('check user', users);
-            setOnlineUsers(users);
-        })
-    }, []);
+    // useEffect(() => {
+    //     //get username based on the userId
+    //     socket.current = io("http://localhost:8080")
+    //     socket?.current?.emit("new-user-add", post?.userId)
+    //     socket?.current?.on("get-users", (users) => {
+    //         console.log('check user', users);
+    //         setOnlineUsers(users);
+    //     })
+    // }, []);
 
     const handleNotification = (receiverName, receiverId, type) => {
+        console.log(receiverName, receiverId, type);
+        //add new user
+        socket.current = io("http://localhost:8080")
+        socket?.current?.emit("new-notifcation-user", receiverId)
+        socket?.current?.on("get-noticed", (users) => {
+            console.log('check sender Id', users);
+            setOnlineUsers(users);
+        })
+
         socket.current.emit('sendnotification', {
             senderName: user.username,
+            senderId: user.id,
             receiverName,
             receiverId,
             type
@@ -66,21 +76,21 @@ const Post = ({ post }) => {
             if (likedPst >= 1) {
                 likedPst = setLikedPst(likedPst - 1);
                 deletelikepost(dispatch, { likesuserId: user.id, likespostId: post.id }, post.id);
-                handleNotification(post.username, post.userId, 1);
+                handleNotification(post.username, post.userId[0], 1);
             } else {
                 likedPst = setLikedPst(likedPst + 1);
                 createlikepost(dispatch, { likesuserId: user.id, likespostId: post.id });
-                handleNotification(post.username, post.userId, 1);
+                handleNotification(post.username, post.userId[0], 1);
             }
         } else {
             if (likedPst <= 0) {
                 likedPst = setLikedPst(likedPst + 1);
                 createlikepost(dispatch, { likesuserId: user.id, likespostId: post.id });
-                handleNotification(post.username, post.userId, 1);
+                handleNotification(post.username, post.userId[0], 1);
             } else {
                 likedPst = setLikedPst(likedPst - 1);
                 deletelikepost(dispatch, { likesuserId: user.id, likespostId: post.id }, post.id);
-                handleNotification(post.username, post.userId, 1);
+                handleNotification(post.username, post.userId[0], 1);
             }
         }
     }

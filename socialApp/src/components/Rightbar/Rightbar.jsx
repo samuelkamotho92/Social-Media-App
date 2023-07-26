@@ -10,6 +10,8 @@ import { getSuggested, createRelationship, followSuggested } from '../../redux/a
 import { FaUserCircle } from 'react-icons/fa'
 import { io } from 'socket.io-client';
 import Chatonline from '../Chat/Chatonline';
+import { domain } from '../../utils/utils';
+import axios from 'axios';
 const Rightbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.user?.data)
@@ -18,38 +20,67 @@ const Rightbar = () => {
   const currentuserid = useSelector((state) => state.user?.user?.data?.id);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [notifications, setNotification] = useState([]);
+  const [notifiedImage, setnotifiedImage] = useState("");
   const socket = useRef();
   console.log(suggested);
   useEffect(() => {
     getSuggested(dispatch, userid);
   }, []);
 
-  //get notifications
 
-  useEffect(() => {
-    socket?.current?.on("getnotifications", (data) => {
-      setNotification((prev) => [...prev, data]);
-    })
-  }, [socket]);
-
+  // console.log(notifications);
   //get Online users
   useEffect(() => {
     socket.current = io("http://localhost:8080");
     //subscribe to event which is connecting
     socket.current.emit("new-user-add", user?.id)
     //get active users on frontned emit the same name
-    socket.current.on("get-users", (users) => {
+    socket?.current?.on("get-users", (users) => {
       console.log('check user');
       setOnlineUsers(users);
     })
-  }, [user]);
-  console.log(onlineUsers);
+    //get notifications
+    socket?.current?.on("getnotifications", (data) => {
+      console.log("sender id")
+      setNotification((prev) => [...prev, data]);
+    })
+  }, [user, socket]);
+  console.log(notifications);
+  console.log(notifications.senderId);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     console.log(notifications.senderId);
+  //     const user = await axios.get(`${domain}/user/${notifications.senderId}`);
+  //     console.log(user);
+  //   }
+  //   getData();
+  // }, [notifications.senderId])
 
+  //display notification
+  const displayNotifications = ({ senderName, senderId, receiverName, type }) => {
+    const getData = async () => {
+      console.log(notifications.senderId);
+      const user = await axios.get(`${domain}/user/${senderId}`);
+      console.log(user);
+    }
+    getData();
+    let action;
+    if (type == 1) {
+      action = "liked"
+    } else if (type == 2) {
+      action = "commented"
+    }
+    return (
+      <div className='user'>
+        <div className='userInfo'>
+          <img src={user.profilePic} />
+          <p>{`${senderName}`}</p>
+          <p>{`${action} Your Post`}</p>
+        </div>
+      </div>
+    )
+  }
 
-  // const createFollow = (userId, id) => {
-  //   createRelationship(dispatch, { followeruserId: userId, followeduserId: id });
-
-  // }
   return (
     <div className='rightbar'>
       <div className="container">
@@ -70,32 +101,14 @@ const Rightbar = () => {
             ))
           }
         </div>
-        <div className="item">
+        <div className="item" style={{ position: "relative" }}>
           <span>Notifications</span>
-          <div className='user'>
-            <div className='userInfo' alt='samkam'>
-              <img src={profile} />
-              <p>James Ngunga</p>
-              <p>Followed you</p>
-            </div>
-            <span>1 day Ago</span>
-          </div>
-          <div className='user'>
-            <div className='userInfo' alt='samkam'>
-              <img src={sam} />
-              <p>Chris Mureithi </p>
-              <p>Liked your post</p>
-            </div>
-            <span>1 hr Ago</span>
-          </div>
-          <div className='user'>
-            <div className='userInfo' alt='samkam'>
-              <img src={profile} />
-              <p>Samuel</p>
-              <p>Commented on your post</p>
-            </div>
-            <span>1 min Ago</span>
-          </div>
+          {notifications && <span style={{ color: "red", position: "absolute", top: "0px" }}>{notifications.length}</span>}
+          {
+            notifications.map((notif) => (
+              displayNotifications(notif)
+            ))
+          }
         </div>
 
         <div className="item" key={user?.id}>

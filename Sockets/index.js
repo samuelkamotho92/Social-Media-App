@@ -4,6 +4,7 @@ const io = require("socket.io")(8080, {
   },
 });
 let activeUsers = [];
+let sendNotification = [];
 
 io.on("connection", (socket) => {
   //get data from client
@@ -23,9 +24,7 @@ io.on("connection", (socket) => {
   socket.on("send-message", (data) => {
     const { receiverId } = data;
     const user = activeUsers.find((user) => user.userId === receiverId);
-    console.log(user);
-    console.log("sent from socket", receiverId);
-    console.log("data", data);
+    console.log(user.socketId);
     if (user) {
       io.to(user.socketId).emit("receive-message", data);
       //send notification to user
@@ -40,13 +39,27 @@ io.on("connection", (socket) => {
     io.emit("get-users", activeUsers);
   });
 
+  //pass the userId of the reciver
+  socket.on("new-notifcation-user", (userId) => {
+    if (!sendNotification.some((user) => user.userId === userId)) {
+      sendNotification.push({
+        userId: userId,
+        socketId: socket.id,
+      });
+    }
+    console.log("noticed user", sendNotification);
+    //send to client
+    io.emit("get-noticed", sendNotification);
+  });
+
   socket.on(
     "sendnotification",
-    ({ senderName, receiverName, receiverId, type }) => {
+    ({ senderName, senderId, receiverName, receiverId, type }) => {
       const user = activeUsers.find((user) => user.userId === receiverId);
       console.log(user);
       io.to(user.socketId).emit("getnotifications", {
         senderName,
+        senderId,
         receiverName,
         type,
       });
