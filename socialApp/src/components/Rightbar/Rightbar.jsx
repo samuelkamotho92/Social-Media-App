@@ -103,7 +103,7 @@ const Rightbar = () => {
         </div>
         <div className="item" style={{ position: "relative" }}>
           <span>Notifications</span>
-          {notifications && <span style={{ color: "red", position: "absolute", top: "0px" }}>{notifications.length}</span>}
+          {notifications && <span style={{ color: "black", position: "absolute", top: "0px" }}>{notifications.length}</span>}
           {
             notifications.map((notif) => (
               displayNotifications(notif)

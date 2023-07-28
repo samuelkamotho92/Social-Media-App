@@ -22,7 +22,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className='center'>
-        <input type='text' placeholder='Search' style={{ borderRadius: "20px", width: '218px', height: "58px", backgroundColor: "gray" }} />
+        <input type='text' placeholder='Search' style={{ borderRadius: "20px", width: '218px', height: "40px", backgroundColor: "gray" }} />
         <div className='icon'>
           <MdHome />
         </div>

@@ -72,7 +72,7 @@ const Home = () => {
       <div className='createStory'>
         <form onSubmit={handleSubmit} style={{ display: "flex" }}>
           <input type='file' id='file' onChange={(e) => setFile(e.target.files[0])} required />
-          <label htmlFor=""><button style={{ color: "red", margin: "auto", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center" }} type='submit'>Add</button></label>
+          <label htmlFor=""><button style={{ color: "black", margin: "auto", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: '#DEC9EE' }} type='submit'>Add</button></label>
           {file && <img className='file' alt='' src={URL.createObjectURL(file)} height="40px" width="40px" style={{ objectfit: "cover" }} />}
         </form>
         {/* <p>Create Story</p> */}

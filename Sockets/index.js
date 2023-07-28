@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
     ({ senderName, senderId, receiverName, receiverId, type }) => {
       const user = activeUsers.find((user) => user.userId === receiverId);
       console.log(user);
-      io.to(user.socketId).emit("getnotifications", {
+      io.to(user?.socketId).emit("getnotifications", {
         senderName,
         senderId,
         receiverName,

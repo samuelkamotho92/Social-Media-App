@@ -39,15 +39,6 @@ const Post = ({ post }) => {
         getLikes();
     }, []);
 
-    // useEffect(() => {
-    //     //get username based on the userId
-    //     socket.current = io("http://localhost:8080")
-    //     socket?.current?.emit("new-user-add", post?.userId)
-    //     socket?.current?.on("get-users", (users) => {
-    //         console.log('check user', users);
-    //         setOnlineUsers(users);
-    //     })
-    // }, []);
 
     const handleNotification = (receiverName, receiverId, type) => {
         console.log(receiverName, receiverId, type);

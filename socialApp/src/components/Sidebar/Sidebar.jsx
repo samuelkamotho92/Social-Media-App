@@ -30,7 +30,7 @@ const Sidebar = () => {
           <div className='item'>
             <GiThreeFriends />
             <span>
-              <Link to='/chat' style={{ textDecoration: "none" }}>
+              <Link to='/chat' style={{ textDecoration: "none", color: 'black' }}>
                 Groups
               </Link>
             </span>
@@ -38,7 +38,7 @@ const Sidebar = () => {
           <div className='item'>
             <BsSearch />
             <span>
-              <Link to='/chat' style={{ textDecoration: "none" }}>
+              <Link to='/chat' style={{ textDecoration: "none", color: "black" }}>
                 Messages
               </Link>
             </span>

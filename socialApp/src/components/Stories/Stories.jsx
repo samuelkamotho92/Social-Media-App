@@ -20,7 +20,7 @@ const Stories = () => {
             <div className="story">
                 <img src={profile} alt='profile' />
                 <span>samkam</span>
-                <button style={{ color: "red" }}>+</button>
+                <button style={{ color: "black" }}>+</button>
             </div>
             {
                 stories?.map((story) => (

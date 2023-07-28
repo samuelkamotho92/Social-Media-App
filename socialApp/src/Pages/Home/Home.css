@@ -50,9 +50,11 @@ width: 100%;
     bottom: 40px;
     left: 10px;
     color: white;
-    background-color: rgb(150, 232, 150);
+    background-color: #DEC9EE;
+    /* background-color: rgb(150, 232, 150); */
     border:none;
     border-radius: 50%;
+    height: 4;
     cursor: pointer;
 }
 .title{  

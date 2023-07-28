@@ -16,6 +16,7 @@ const Update = ({ setUpdateComp }) => {
     const [fullnames, setfullnames] = useState(`${user.fullnames}`);
     const [city, setCity] = useState(`${user.city}`);
     const [website, setwebsite] = useState(`${user.website}`);
+    const [bio, setBio] = useState("Enter your bio here");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -74,12 +75,12 @@ const Update = ({ setUpdateComp }) => {
                                 />
                             </div>
                             <div>
-                                <label>Password</label>
+                                <label>Bio</label>
                                 <input
-                                    type="password"
-                                    value={password}
-                                    name="password"
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    type="text"
+                                    value={bio}
+                                    name="bio"
+                                    onChange={(e) => setBio(e.target.value)}
                                 />
                             </div>
 
